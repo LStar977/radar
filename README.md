@@ -4,14 +4,15 @@ Radar finds customers for any business. It reads public signals across the web (
 
 ## Status
 
-Concept stage. The kickoff book covers how the platform works and four brand directions to choose from.
+Concept stage.
 
-- `docs/radar-kickoff.html`: platform blueprint, brand directions (Phosphor, Thermal, Blip, Coordinates) and the Rive companion brief
+- `site/`: interactive marketing website starring Echo, the bat companion animated in Rive. See `site/README.md` to run, rebuild or deploy it.
+- `docs/radar-kickoff.html`: platform blueprint, the first four brand directions and the Rive companion brief.
+
+The brand now follows Echo's look: blackberry, orchid, petal pink and moonlight, with the tagline "Find tomorrow's customers today."
 
 ## Next steps
 
-1. Pick a brand direction, tagline, launch industries and name/domain approach
-2. Brandkit
-3. Feature list (MVP vs. later)
-4. Marketing website
-5. Clickable prototype
+1. Brandkit based on Echo's palette
+2. Feature list (MVP vs. later)
+3. Clickable prototype
