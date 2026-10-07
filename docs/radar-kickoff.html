@@ -1,0 +1,1420 @@
+<title>Radar Kickoff Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Figtree:wght@400;500;600;700&family=Fredoka:wght@400;500;600;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=JetBrains+Mono:wght@400;500;700&family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Unbounded:wght@400;600;800&display=swap">
+<style>
+:root{
+  /* Layout: long-scroll kickoff book in a 1180px column with a sticky section nav. The four brand boards are framed artboards, each in its own visual language. */
+  --bg:#EFF0F2;
+  --surface:#FFFFFF;
+  --fg:#0E1116;
+  --muted:#59606C;
+  --line:#D6D9DF;
+  --soft:#E5E7EB;
+  --accent:#3550E6;
+  --ok:#1F8A4C;
+  --warn:#B86E00;
+  --bad:#C2352B;
+  --f-display:"Schibsted Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-body:"Schibsted Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --gutter:clamp(16px,4vw,40px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#0B0D10;--surface:#13161B;--fg:#E7EAEE;--muted:#8E96A2;--line:#272C34;--soft:#1A1E25;--accent:#97A8FF;--ok:#4CC383;--warn:#F0A63A;--bad:#FF7468;color-scheme:dark}
+}
+:root[data-theme="dark"]{--bg:#0B0D10;--surface:#13161B;--fg:#E7EAEE;--muted:#8E96A2;--line:#272C34;--soft:#1A1E25;--accent:#97A8FF;--ok:#4CC383;--warn:#F0A63A;--bad:#FF7468;color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--f-body);padding-inline:var(--gutter);-webkit-font-smoothing:antialiased}
+main{max-width:1180px;margin:0 auto}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+h1,h2,h3,h4{text-wrap:balance;margin:0}
+p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+code,.mono{font-family:var(--f-mono)}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;margin-inline:calc(-1 * var(--gutter));padding-inline:var(--gutter);background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:20px;height:52px}
+.nav-brand{font:700 14px/1 var(--f-mono);letter-spacing:.16em;white-space:nowrap;display:flex;align-items:center;gap:8px;color:var(--fg);text-decoration:none}
+.nav-brand i{width:8px;height:8px;border-radius:50%;background:var(--fg);box-shadow:0 0 0 4px var(--soft)}
+.nav-links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;min-width:0}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:999px;white-space:nowrap}
+.nav-links a:hover{color:var(--fg);background:var(--soft)}
+
+/* ---------- hero ---------- */
+.hero{padding-block:72px 56px;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:48px;align-items:end}
+.eyebrow{font:500 12px/1.4 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.hero h1{font:800 clamp(38px,6vw,72px)/1.0 var(--f-display);letter-spacing:-.035em;margin-block:18px 22px;max-width:15ch}
+.hero .lede{font-size:clamp(17px,1.6vw,19px);line-height:1.6;color:var(--muted);max-width:62ch}
+.meta{border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden}
+.meta div{display:flex;justify-content:space-between;gap:12px;padding:11px 16px;border-bottom:1px solid var(--line);font-size:14px}
+.meta div:last-child{border-bottom:0}
+.meta dt,.meta span:first-child{color:var(--muted)}
+.meta b{font-weight:600;text-align:right}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.toc a{font-size:14px;text-decoration:none;color:var(--fg);border:1px solid var(--line);background:var(--surface);padding:8px 14px;border-radius:999px}
+.toc a:hover{border-color:var(--fg)}
+
+/* ---------- sections ---------- */
+.sec{padding-block:64px;border-top:1px solid var(--line)}
+.sec-head{display:grid;grid-template-columns:180px minmax(0,1fr);gap:16px 32px;margin-bottom:36px}
+.sec-head h2{font:700 clamp(28px,3.4vw,40px)/1.1 var(--f-display);letter-spacing:-.025em}
+.sec-head .lede{color:var(--muted);font-size:17px;margin-top:12px;max-width:66ch}
+.part{font:600 12px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:56px 0 0;display:flex;align-items:center;gap:14px}
+.part::after{content:"";flex:1;height:1px;background:var(--line)}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;min-width:0}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.label,.card p.label{font:500 11px/1.3 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.card h3{font:700 19px/1.25 var(--f-display);letter-spacing:-.01em;margin-block:8px 8px}
+.card p{color:var(--muted);font-size:15px}
+.callout{margin-top:20px;padding:16px 20px;border-radius:12px;background:var(--soft);font-size:15px;color:var(--fg);max-width:none}
+.callout b{font-weight:700}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;counter-reset:step}
+.step{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 16px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.step .n{font:600 12px/1 var(--f-mono);color:var(--muted)}
+.step h3{font:700 18px/1.2 var(--f-display)}
+.step p{font-size:14px;color:var(--muted);line-height:1.5}
+.step .out{margin-top:auto;font:500 11.5px/1.35 var(--f-mono);color:var(--fg);background:var(--soft);border-radius:8px;padding:7px 9px}
+.step:not(:last-child)::after{content:"";position:absolute;right:-12px;top:30px;width:12px;height:1px;background:var(--fg)}
+
+/* worked examples */
+.ex-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:6px}
+.ex-head h3{margin:0}
+.sig{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:14px;padding:14px 0;border-bottom:1px dashed var(--line);align-items:start}
+.sig:last-child{border-bottom:0}
+.sig .src{font:500 11.5px/1 var(--f-mono);color:var(--muted);margin-bottom:6px;display:block}
+.sig q{font-size:15px;line-height:1.5;color:var(--fg);quotes:"\201C" "\201D"}
+.sig .read{display:flex;flex-direction:column;gap:5px;align-items:flex-start}
+.chip{display:inline-flex;align-items:center;gap:6px;font:500 11.5px/1.2 var(--f-mono);border:1px solid var(--line);border-radius:999px;padding:4px 9px;color:var(--fg);background:var(--surface);white-space:nowrap}
+.heat{display:inline-flex;align-items:center;gap:8px;font:700 13px/1 var(--f-mono)}
+.heat i{display:block;width:64px;height:6px;border-radius:6px;background:var(--soft);position:relative;overflow:hidden}
+.heat i::after{content:"";position:absolute;inset:0;width:var(--v);background:var(--fg);border-radius:6px}
+
+/* signals */
+.sigtype .q{margin-top:12px;font-size:14px;color:var(--fg);border-left:2px solid var(--line);padding-left:12px;font-style:italic}
+.sigtype .from{margin-top:12px;font:500 11.5px/1.5 var(--f-mono);color:var(--muted)}
+
+/* sources */
+.tier{display:flex;flex-direction:column;gap:12px}
+.tier .status{display:inline-flex;align-items:center;gap:8px;font:600 12px/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase}
+.tier .status i{width:9px;height:9px;border-radius:50%;background:currentColor}
+.t-ok .status{color:var(--ok)} .t-warn .status{color:var(--warn)} .t-bad .status{color:var(--bad)}
+.tier ul{display:flex;flex-direction:column;gap:7px;font-size:14.5px}
+.tier li{padding-left:16px;position:relative;color:var(--fg)}
+.tier li::before{content:"";position:absolute;left:0;top:.68em;width:6px;height:1px;background:var(--muted)}
+.tier .foot{font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px;margin-top:auto}
+
+/* geography */
+.geo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:16px;align-items:stretch}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chips .chip{font-size:12.5px;padding:7px 12px}
+.chips .chip.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.howloc{display:flex;flex-direction:column;gap:10px;margin-top:18px;counter-reset:loc}
+.howloc li{display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;font-size:14.5px;color:var(--fg)}
+.howloc li::before{counter-increment:loc;content:counter(loc);font:600 11px/22px var(--f-mono);text-align:center;width:22px;height:22px;border-radius:50%;border:1px solid var(--line);color:var(--muted)}
+.slider{margin-top:18px}
+.slider .track{height:6px;border-radius:6px;background:var(--soft);position:relative;margin-top:10px}
+.slider .track::before{content:"";position:absolute;inset:0 20% 0 0;background:var(--fg);border-radius:6px}
+.slider .track::after{content:"";position:absolute;left:80%;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:var(--surface);border:2px solid var(--fg)}
+.slider .row{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+.hexmap{padding:0;overflow:hidden;display:flex;flex-direction:column}
+.hexmap svg{display:block;width:100%;height:auto;flex:1}
+.hexmap .cap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--line);font:500 12px/1.4 var(--f-mono);color:var(--muted)}
+.hx{fill:var(--accent);stroke:var(--surface);stroke-width:1.2}
+.hx-out{fill:var(--soft);stroke:var(--surface);stroke-width:1.2}
+.ring{fill:none;stroke:var(--fg);stroke-width:1.5;stroke-dasharray:5 5}
+.pin{fill:var(--fg)}
+.pin-ring{fill:var(--surface);stroke:var(--fg);stroke-width:2}
+.svgtext{fill:var(--fg);font:600 12px var(--f-mono)}
+.svgtext-muted{fill:var(--muted);font:500 11px var(--f-mono)}
+
+/* product */
+.prod h3{display:flex;align-items:center;gap:10px}
+.prod .tag{font:500 10.5px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:4px 8px;margin-left:auto;white-space:nowrap}
+
+/* pricing */
+.plan{display:flex;flex-direction:column;gap:10px}
+.plan .price{font:800 34px/1 var(--f-display);letter-spacing:-.03em}
+.plan .price small{font:500 14px var(--f-body);color:var(--muted);letter-spacing:0}
+.plan ul{display:flex;flex-direction:column;gap:6px;font-size:14.5px;border-top:1px solid var(--line);padding-top:12px}
+.plan li{color:var(--fg)}
+.plan li::before{content:"+ ";color:var(--muted);font-family:var(--f-mono)}
+.plan.feature{border-color:var(--fg);box-shadow:0 0 0 1px var(--fg)}
+.addon{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 20px;align-items:center;margin-top:16px}
+.addon h3{margin:0}
+
+/* tables */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:14.5px}
+th,td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:500 11px/1.3 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:var(--soft)}
+td:first-child{font-weight:700;white-space:nowrap}
+td{color:var(--fg)}
+td.m{color:var(--muted)}
+tr.us td{background:color-mix(in srgb,var(--accent) 9%,var(--surface));border-bottom:0}
+tr:last-child td{border-bottom:0}
+
+/* risks */
+.risk h3{font-size:17px}
+
+/* gtm */
+.wedge .who{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.later{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;align-items:center}
+.later .label{margin-right:6px}
+
+/* ---------- brand compare strip ---------- */
+.palin{display:grid;grid-template-columns:auto minmax(0,1fr);gap:24px;align-items:center;margin-bottom:28px}
+.palin .word{font:800 clamp(40px,7vw,84px)/1 var(--f-display);letter-spacing:.06em;display:flex;gap:.04em}
+.palin .word span:nth-child(3){color:var(--accent)}
+.palin p{color:var(--muted);font-size:16px;max-width:52ch}
+.compare{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.cmp{display:flex;flex-direction:column;gap:10px;text-decoration:none;border-radius:16px;padding:16px;min-height:150px;border:1px solid var(--line);transition:transform .2s ease}
+.cmp:hover{transform:translateY(-2px)}
+.cmp svg{width:36px;height:36px}
+.cmp b{font-size:18px}
+.cmp span{font:500 11px/1.4 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;opacity:.75}
+.cmp-a{background:#06080A;color:#E6F2E9;font-family:"Unbounded",var(--f-display)}
+.cmp-b{background:#FFF8F3;color:#1C0A1F;font-family:"Bricolage Grotesque",var(--f-display)}
+.cmp-c{background:#EEF2FF;color:#101533;font-family:"Fredoka",var(--f-display)}
+.cmp-d{background:#E9E7DF;color:#151515;font-family:"Archivo",var(--f-display);font-stretch:125%}
+
+/* ---------- boards (shared) ---------- */
+.board{background:var(--b-bg);color:var(--b-fg);border-radius:28px;overflow:hidden;border:1px solid var(--b-line);margin-top:28px;font-family:var(--b-body);font-size:15px;line-height:1.55}
+.board-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 24px;align-items:center;padding:20px 28px;border-bottom:1px solid var(--b-line)}
+.board-letter{font:500 11px/1 var(--b-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--b-muted);grid-row:span 2}
+.board-name{font-family:var(--b-display);font-size:30px;line-height:1.05}
+.board-pitch{color:var(--b-muted);font-size:15px;grid-column:2}
+.board-tags{display:flex;gap:6px;flex-wrap:wrap;grid-row:1/span 2;grid-column:3;justify-content:flex-end}
+.board-tags li{font:500 11px/1 var(--b-mono);letter-spacing:.06em;text-transform:uppercase;padding:7px 10px;border:1px solid var(--b-line);border-radius:999px;color:var(--b-fg)}
+.board-hero{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:28px 32px;align-items:center;padding:24px 32px 44px}
+.mock-nav{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:16px;position:relative;z-index:2}
+.mock-links{display:flex;gap:22px;font-size:13.5px;color:var(--b-muted)}
+.lockup{display:inline-flex;align-items:center;gap:9px}
+.lockup svg{width:26px;height:26px;flex:none}
+.hero-copy{position:relative;z-index:2;display:flex;flex-direction:column;gap:18px;min-width:0}
+.ctas{display:flex;gap:10px;flex-wrap:wrap}
+.hero-vis{position:relative;z-index:1;min-width:0;display:flex;justify-content:center}
+.board-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:1px;background:var(--b-line);border-top:1px solid var(--b-line)}
+.cell{background:var(--b-bg);padding:24px 26px;min-width:0;display:flex;flex-direction:column;gap:14px}
+.c-logo{grid-column:span 5}.c-pal{grid-column:span 7}.c-type{grid-column:span 6}.c-ui{grid-column:span 6}.c-voice{grid-column:span 7}.c-comp{grid-column:span 5}
+.cell-label{font:500 11px/1 var(--b-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--b-muted)}
+.cell-note{font-size:13.5px;color:var(--b-muted)}
+.logo-stage{display:flex;align-items:center;gap:14px;padding:26px 8px;justify-content:center;flex-wrap:wrap}
+.logo-stage svg{width:64px;height:64px;flex:none}
+.logo-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.appicon{width:64px;height:64px;border-radius:16px;display:grid;place-items:center;flex:none}
+.appicon svg{width:38px;height:38px}
+.logo-chip{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:12px;flex:none}
+.logo-chip svg{width:22px;height:22px}
+.sws{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:12px}
+.sw{display:flex;flex-direction:column;gap:3px;min-width:0}
+.sw i{display:block;height:58px;border-radius:12px;background:var(--c);border:1px solid var(--b-line);margin-bottom:5px}
+.sw b{font-size:13.5px;font-weight:600}
+.sw code{font:500 11.5px/1.2 var(--b-mono);color:var(--b-muted)}
+.sw span{font-size:12px;color:var(--b-muted)}
+.spec{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 18px;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--b-line)}
+.spec:last-child{border-bottom:0;padding-bottom:0}
+.spec .aa{font-size:52px;line-height:1;min-width:70px}
+.spec b{display:block;font-weight:600;font-size:14px}
+.spec small{display:block;color:var(--b-muted);font-size:12.5px;font-family:var(--b-mono)}
+.spec .sample{grid-column:1/-1;font-size:15px}
+.voice-tags{display:flex;flex-direction:column;gap:8px}
+.voice-tags li{font-family:var(--b-display);font-size:20px;line-height:1.2}
+.alertcopy{font-size:14.5px;padding:12px 14px;border-radius:12px;border:1px solid var(--b-line)}
+.wordlists{display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:13.5px}
+.wordlists b{display:block;font:500 10.5px/1 var(--b-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--b-muted);margin-bottom:6px}
+.comp-art{display:flex;justify-content:center;align-items:center;padding:8px 0}
+.comp-art svg{width:150px;height:auto}
+.board-foot{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--b-line);border-top:1px solid var(--b-line)}
+.board-foot div{background:var(--b-bg);padding:18px 26px;font-size:14.5px}
+.board-foot b{display:block;font:500 10.5px/1 var(--b-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--b-muted);margin-bottom:8px}
+
+/* lead card (shared skeleton) */
+.lead{display:flex;flex-direction:column;gap:12px;padding:18px;border-radius:16px}
+.lead-top{display:flex;align-items:center;gap:10px;font-size:12.5px;flex-wrap:wrap}
+.lead-heat{margin-left:auto;display:inline-flex;align-items:baseline;gap:5px}
+.lead-heat b{font-size:20px;line-height:1}
+.lead-quote{font-size:15.5px;line-height:1.45}
+.lead-tags{display:flex;flex-wrap:wrap;gap:6px}
+.lead-tags span{font-size:12px;padding:5px 9px;border-radius:999px}
+.lead-actions{display:flex;gap:8px;flex-wrap:wrap}
+.lead-actions span{font-size:13px;font-weight:600;padding:9px 14px;border-radius:10px}
+
+/* ---------- A: Phosphor ---------- */
+.b-phos{--b-bg:#06080A;--b-surface:#0E1216;--b-fg:#E6F2E9;--b-muted:#7F9087;--b-line:#1C252B;--b-accent:#B6FF3B;--b-hot:#FF6B2C;--b-display:"Unbounded",var(--f-display);--b-body:"Geist",var(--f-body);--b-mono:"Geist Mono",var(--f-mono)}
+.b-phos .board-name{font-weight:600;letter-spacing:.02em;text-transform:uppercase;font-size:26px}
+.b-phos .board-hero{background:radial-gradient(55% 75% at 78% 45%,rgba(182,255,59,.09),transparent 70%),var(--b-bg)}
+.phos-wm{font:600 15px/1 var(--b-display);letter-spacing:.24em}
+.phos-wm em,.phos-big em{font-style:normal;color:var(--b-accent)}
+.phos-btn{font:500 13px/1 var(--b-body);padding:10px 14px;border-radius:8px;background:var(--b-accent);color:#06080A}
+.phos-kicker{font:500 12px/1 var(--b-mono);letter-spacing:.12em;color:var(--b-accent);display:flex;align-items:center;gap:8px}
+.phos-kicker i{width:7px;height:7px;border-radius:50%;background:var(--b-accent);box-shadow:0 0 10px var(--b-accent);animation:blink 1.6s ease-in-out infinite}
+.phos-h{font:800 clamp(34px,5.2vw,62px)/.98 var(--b-display);letter-spacing:-.01em;text-transform:uppercase}
+.phos-sub{font-size:17px;color:#B9C7BF;max-width:40ch}
+.btn-lime{font-weight:600;font-size:14px;padding:12px 18px;border-radius:9px;background:var(--b-accent);color:#06080A;box-shadow:0 0 24px rgba(182,255,59,.35)}
+.btn-ghost{font-weight:500;font-size:14px;padding:12px 18px;border-radius:9px;border:1px solid #2A363D;color:var(--b-fg)}
+.scope-wrap{position:relative;width:min(100%,330px)}
+.scope{position:relative;width:100%;aspect-ratio:1;border-radius:50%;overflow:hidden;border:1px solid rgba(182,255,59,.4);
+  background:
+    linear-gradient(to right,transparent calc(50% - .5px),rgba(182,255,59,.22) calc(50% - .5px),rgba(182,255,59,.22) calc(50% + .5px),transparent calc(50% + .5px)),
+    linear-gradient(to bottom,transparent calc(50% - .5px),rgba(182,255,59,.22) calc(50% - .5px),rgba(182,255,59,.22) calc(50% + .5px),transparent calc(50% + .5px)),
+    repeating-radial-gradient(circle at center,transparent 0 calc(12.5% - 1px),rgba(182,255,59,.16) calc(12.5% - 1px) 12.5%),
+    radial-gradient(circle at center,#0C1711 0%,#06080A 72%)}
+.sweep{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,rgba(182,255,59,0) 0deg 275deg,rgba(182,255,59,.06) 275deg,rgba(182,255,59,.5) 359deg,rgba(182,255,59,0) 360deg);animation:spin 4.5s linear infinite}
+.blip{position:absolute;left:var(--x);top:var(--y);width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--b-accent);box-shadow:0 0 12px var(--b-accent)}
+.blip::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid var(--b-accent);animation:ping 2.2s ease-out infinite;opacity:0}
+.blip.hot{background:var(--b-hot);box-shadow:0 0 14px var(--b-hot);width:10px;height:10px;margin:-5px 0 0 -5px}
+.blip.hot::after{border-color:var(--b-hot)}
+.scope-tag{position:absolute;left:41%;top:61%;font:500 10.5px/1.3 var(--b-mono);letter-spacing:.08em;color:var(--b-fg);background:rgba(14,18,22,.9);border:1px solid #33241C;border-left:2px solid var(--b-hot);padding:6px 8px;white-space:nowrap}
+.scope-meta{display:flex;justify-content:space-between;margin-top:12px;font:500 11px/1 var(--b-mono);letter-spacing:.1em;color:var(--b-muted)}
+.b-phos .logo-stage{background:radial-gradient(60% 90% at 50% 50%,rgba(182,255,59,.07),transparent 70%)}
+.phos-big{font:600 34px/1 var(--b-display);letter-spacing:.2em}
+.b-phos .lead{background:var(--b-surface);border:1px solid var(--b-line)}
+.b-phos .lead-top{font-family:var(--b-mono);color:var(--b-muted);letter-spacing:.04em}
+.b-phos .lead-src{color:var(--b-accent)}
+.b-phos .lead-heat b{color:var(--b-hot);font-family:var(--b-mono)}
+.b-phos .lead-tags span{border:1px solid var(--b-line);color:#B9C7BF;font-family:var(--b-mono);font-size:11px;border-radius:6px}
+.b-phos .la-primary{background:var(--b-accent);color:#06080A}
+.b-phos .la-secondary{border:1px solid #2A363D;color:var(--b-fg)}
+.b-phos .alertcopy{font-family:var(--b-mono);font-size:13px;color:var(--b-accent);background:var(--b-surface)}
+.b-phos .voice-tags li{text-transform:uppercase;font-size:17px;letter-spacing:.02em}
+
+/* ---------- B: Thermal ---------- */
+.b-therm{--b-bg:#FFF8F3;--b-surface:#FFFFFF;--b-fg:#1C0A1F;--b-muted:#7A5D6C;--b-line:#F0DAD3;--b-accent:#FF4A1C;--b-uv:#3D0C7A;--b-mag:#B5179E;--b-amb:#FFB21A;--b-wht:#FFF0A0;--b-display:"Bricolage Grotesque",var(--f-display);--b-body:"Bricolage Grotesque",var(--f-body);--b-mono:"Geist Mono",var(--f-mono);
+  --heat-grad:linear-gradient(90deg,#3D0C7A 0%,#B5179E 30%,#FF4A1C 60%,#FFB21A 82%,#FFF0A0 100%)}
+.b-therm .board-name{font-weight:800;font-stretch:80%;letter-spacing:-.03em;font-size:34px}
+.b-therm .board-hero{min-height:420px}
+.therm-blobs{position:absolute;inset:0;z-index:0;background:
+  radial-gradient(26% 38% at 76% 46%,#FFF0A0 0%,#FFB21A 20%,#FF4A1C 42%,rgba(181,23,158,.85) 64%,rgba(61,12,122,0) 86%),
+  radial-gradient(16% 24% at 56% 86%,#FFB21A 0%,#FF4A1C 34%,rgba(181,23,158,.7) 64%,rgba(181,23,158,0) 88%),
+  radial-gradient(14% 20% at 95% 10%,rgba(255,74,28,.85) 0%,rgba(181,23,158,.55) 50%,rgba(181,23,158,0) 85%);
+  filter:blur(22px)}
+.grain{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.32;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.therm-wm{font:800 22px/1 var(--b-display);letter-spacing:-.045em}
+.therm-btn{font-weight:700;font-size:13.5px;padding:10px 16px;border-radius:999px;background:var(--b-fg);color:#FFF8F3}
+.therm-h{font:800 clamp(56px,9vw,112px)/.88 var(--b-display);font-stretch:78%;letter-spacing:-.025em}
+.therm-h em{font-style:normal;background:var(--heat-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.therm-sub{font-size:18px;max-width:34ch;color:#4A2A45}
+.btn-ink{font-weight:700;font-size:15px;padding:13px 20px;border-radius:999px;background:var(--b-fg);color:#FFF8F3}
+.btn-line{font-weight:600;font-size:15px;padding:13px 20px;border-radius:999px;border:1.5px solid var(--b-fg);color:var(--b-fg)}
+.therm-cards{position:relative;width:min(100%,340px);height:300px}
+.dial{position:absolute;right:6%;top:2%;width:150px;height:150px;border-radius:50%;background:conic-gradient(from -130deg,#3D0C7A 0deg,#B5179E 70deg,#FF4A1C 150deg,#FFB21A 215deg,#FFF0A0 245deg,rgba(255,255,255,.35) 245deg 260deg,transparent 260deg);display:grid;place-items:center;-webkit-mask:radial-gradient(circle,transparent 54%,#000 55%);mask:radial-gradient(circle,transparent 54%,#000 55%)}
+.dial-num{position:absolute;right:6%;top:2%;width:150px;height:150px;display:grid;place-items:center;text-align:center}
+.dial-num b{display:block;font:800 46px/1 var(--b-display);letter-spacing:-.04em;color:var(--b-fg)}
+.dial-num span{font:600 11px/1 var(--b-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--b-fg)}
+.therm-chip{position:absolute;left:0;bottom:12%;background:rgba(255,255,255,.92);border-radius:18px;padding:14px 16px;box-shadow:0 18px 40px -18px rgba(61,12,122,.45);display:flex;flex-direction:column;gap:4px;min-width:220px}
+.therm-chip b{font-size:15px}
+.therm-chip span{font-size:12.5px;color:var(--b-muted)}
+.therm-chip .bar{height:6px;border-radius:6px;background:var(--heat-grad);margin-top:6px}
+.b-therm .logo-stage{background:radial-gradient(50% 80% at 50% 50%,rgba(255,74,28,.10),transparent 70%)}
+.therm-big{font:800 52px/1 var(--b-display);letter-spacing:-.05em}
+.heatbar{height:16px;border-radius:999px;background:var(--heat-grad)}
+.heatbar-labels{display:flex;justify-content:space-between;font:500 11px/1 var(--b-mono);color:var(--b-muted);letter-spacing:.06em}
+.b-therm .lead{background:var(--b-surface);box-shadow:0 14px 36px -20px rgba(61,12,122,.35);border:1px solid var(--b-line)}
+.b-therm .lead-top{color:var(--b-muted)}
+.b-therm .lead-src{font-weight:700;color:var(--b-fg)}
+.b-therm .lead-heat b{background:var(--heat-grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:26px;font-weight:800}
+.b-therm .lead-quote{font-size:17px;font-weight:500;letter-spacing:-.01em}
+.b-therm .lead-tags span{background:#FFEDE5;color:#7A2410}
+.b-therm .la-primary{background:var(--b-fg);color:#FFF8F3;border-radius:999px}
+.b-therm .la-secondary{border:1.5px solid var(--b-fg);border-radius:999px}
+.b-therm .lead .bar{height:5px;border-radius:5px;background:var(--heat-grad);clip-path:inset(0 9% 0 0 round 5px)}
+.b-therm .alertcopy{background:var(--b-surface);font-weight:500}
+.b-therm .voice-tags li{font-weight:800;font-stretch:80%;letter-spacing:-.02em;font-size:24px}
+
+/* ---------- C: Blip ---------- */
+.b-blip{--b-bg:#EEF2FF;--b-surface:#FFFFFF;--b-fg:#101533;--b-muted:#545C88;--b-line:#101533;--b-accent:#2D5BFF;--b-sun:#FFD43B;--b-pink:#FF7EB6;--b-mint:#35D49A;--b-display:"Fredoka",var(--f-display);--b-body:"Figtree",var(--f-body);--b-mono:"Figtree",var(--f-body);border-width:2.5px}
+.b-blip .board-head{border-bottom-width:2.5px}
+.b-blip .board-name{font-weight:700;font-size:34px}
+.b-blip .board-letter,.b-blip .cell-label,.b-blip .board-foot b,.b-blip .wordlists b{font-weight:700;letter-spacing:.1em}
+.b-blip .board-tags li{border-width:2px;font-weight:700;background:var(--b-surface)}
+.b-blip .board-hero{background:radial-gradient(rgba(16,21,51,.13) 1.3px,transparent 1.5px) 0 0/20px 20px,var(--b-bg)}
+.blip-wm{font:700 24px/1 var(--b-display);letter-spacing:-.01em}
+.blip-btn{font:700 13.5px/1 var(--b-body);padding:10px 16px;border-radius:12px;background:var(--b-sun);border:2.5px solid var(--b-fg);box-shadow:3px 3px 0 var(--b-fg)}
+.blip-h{font:700 clamp(40px,6.4vw,76px)/1 var(--b-display);letter-spacing:-.015em}
+.blip-h em{font-style:normal;color:var(--b-accent);position:relative;white-space:nowrap}
+.blip-h em::after{content:"";position:absolute;left:2%;right:2%;bottom:.04em;height:.16em;background:var(--b-sun);z-index:-1;border-radius:6px}
+.blip-sub{font-size:18px;max-width:38ch;color:#2A315C}
+.btn-blue{font:700 15px/1 var(--b-body);padding:14px 20px;border-radius:14px;background:var(--b-accent);color:#fff;border:2.5px solid var(--b-fg);box-shadow:4px 4px 0 var(--b-fg)}
+.btn-white{font:700 15px/1 var(--b-body);padding:14px 20px;border-radius:14px;background:var(--b-surface);border:2.5px solid var(--b-fg);box-shadow:4px 4px 0 var(--b-fg)}
+.buddy-wrap{position:relative;width:min(100%,330px);padding-top:70px}
+.buddy{width:76%;margin-left:4%;display:block;animation:bob 3.2s ease-in-out infinite}
+.bubble{position:absolute;right:0;top:0;max-width:210px;background:var(--b-surface);border:2.5px solid var(--b-fg);border-radius:20px;padding:12px 14px;font:600 15px/1.3 var(--b-display);box-shadow:4px 4px 0 var(--b-fg)}
+.bubble::after{content:"";position:absolute;left:28px;bottom:-12px;width:18px;height:18px;background:var(--b-surface);border-right:2.5px solid var(--b-fg);border-bottom:2.5px solid var(--b-fg);transform:rotate(45deg) skew(8deg,8deg)}
+.sticker{position:absolute;font:700 14px/1 var(--b-display);padding:9px 12px;border:2.5px solid var(--b-fg);border-radius:999px;box-shadow:3px 3px 0 var(--b-fg)}
+.st1{right:2%;bottom:24%;background:var(--b-pink);transform:rotate(8deg)}
+.st2{left:0;bottom:6%;background:var(--b-mint);transform:rotate(-6deg)}
+.b-blip .board-grid{gap:16px;background:transparent;padding:20px;border-top:2.5px solid var(--b-line)}
+.b-blip .cell{background:var(--b-surface);border:2.5px solid var(--b-fg);border-radius:20px;box-shadow:5px 5px 0 var(--b-fg)}
+.b-blip .sw i{border:2.5px solid var(--b-fg);border-radius:14px}
+.b-blip .spec{border-bottom:2px dashed rgba(16,21,51,.2)}
+.blip-big{font:700 46px/1 var(--b-display);letter-spacing:-.01em}
+.b-blip .lead{background:var(--b-bg);border:2.5px solid var(--b-fg);box-shadow:4px 4px 0 var(--b-fg);position:relative}
+.b-blip .lead-src{font-weight:700}
+.b-blip .lead-top{color:var(--b-muted)}
+.b-blip .lead-heat{position:absolute;right:-10px;top:-14px;background:var(--b-pink);border:2.5px solid var(--b-fg);border-radius:999px;padding:6px 10px;transform:rotate(6deg);font:700 13px/1 var(--b-display)}
+.b-blip .lead-heat b{font-size:15px}
+.b-blip .lead-quote{font-size:16px;font-weight:500}
+.b-blip .lead-tags span{background:var(--b-surface);border:2px solid var(--b-fg);font-weight:600}
+.b-blip .la-primary{background:var(--b-accent);color:#fff;border:2.5px solid var(--b-fg);border-radius:12px;box-shadow:3px 3px 0 var(--b-fg)}
+.b-blip .la-secondary{background:var(--b-surface);border:2.5px solid var(--b-fg);border-radius:12px}
+.b-blip .alertcopy{background:var(--b-sun);border:2.5px solid var(--b-fg);font-weight:600;border-radius:16px}
+.b-blip .voice-tags li{font-weight:700;font-size:22px}
+.b-blip .board-foot{gap:16px;background:transparent;padding:0 20px 20px;border-top:0}
+.b-blip .board-foot div{background:var(--b-surface);border:2.5px solid var(--b-fg);border-radius:18px}
+.b-blip .board-head,.b-blip .board-tags li{border-color:var(--b-fg)}
+
+/* ---------- D: Coordinates ---------- */
+.b-coord{--b-bg:#E9E7DF;--b-surface:#F4F2EC;--b-fg:#151515;--b-muted:#6A665C;--b-line:#C7C2B4;--b-accent:#FF5A1F;--b-olive:#7E8560;--b-blue:#3C6E9F;--b-display:"Archivo",var(--f-display);--b-body:"Archivo",var(--f-body);--b-mono:"JetBrains Mono",var(--f-mono)}
+.b-coord .board-name{font-weight:900;font-stretch:125%;text-transform:uppercase;font-size:24px;letter-spacing:.01em}
+.b-coord .board-hero{min-height:440px;background:
+  linear-gradient(rgba(21,21,21,.06) 1px,transparent 1px) 0 0/44px 44px,
+  linear-gradient(90deg,rgba(21,21,21,.06) 1px,transparent 1px) 0 0/44px 44px,var(--b-bg)}
+.topo{position:absolute;inset:0;width:100%;height:100%;z-index:0;-webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.25) 30%,#000 58%);mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.25) 30%,#000 58%)}
+.topo path{fill:none;stroke:var(--b-olive);stroke-width:1;opacity:.55}
+.topo path.idx{stroke-width:1.8;opacity:.8}
+.topo text{font:500 10px var(--b-mono);fill:var(--b-olive)}
+.coord-wm{font:900 17px/1 var(--b-display);font-stretch:125%;letter-spacing:.06em}
+.coord-btn{font:600 12px/1 var(--b-mono);letter-spacing:.08em;text-transform:uppercase;padding:11px 14px;background:var(--b-fg);color:var(--b-bg)}
+.coord-kicker{display:flex;gap:16px;flex-wrap:wrap;font:500 11.5px/1 var(--b-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--b-muted)}
+.coord-kicker b{color:var(--b-accent);font-weight:700}
+.coord-h{font:900 clamp(36px,6vw,76px)/.92 var(--b-display);font-stretch:125%;text-transform:uppercase;letter-spacing:-.01em}
+.coord-h em{font-style:normal;color:var(--b-accent)}
+.coord-sub{font-size:17px;max-width:40ch;color:#3A3832}
+.btn-orange{font:600 13px/1 var(--b-mono);letter-spacing:.08em;text-transform:uppercase;padding:15px 18px;background:var(--b-accent);color:#151515}
+.btn-outline{font:600 13px/1 var(--b-mono);letter-spacing:.08em;text-transform:uppercase;padding:13.5px 17px;border:1.5px solid var(--b-fg)}
+.strip{display:flex;gap:0;flex-wrap:wrap;border:1.5px solid var(--b-fg);width:max-content;max-width:100%;background:var(--b-surface)}
+.strip span{font:500 11.5px/1 var(--b-mono);letter-spacing:.06em;padding:10px 12px;border-right:1.5px solid var(--b-fg);white-space:nowrap}
+.strip span:last-child{border-right:0}
+.reticle-wrap{position:relative;width:min(100%,300px);aspect-ratio:1}
+.reticle-wrap svg{width:100%;height:100%;overflow:visible}
+.ret-tag{position:absolute;right:-4%;top:6%;background:var(--b-fg);color:var(--b-bg);font:500 10.5px/1.45 var(--b-mono);letter-spacing:.06em;padding:8px 10px}
+.ret-tag b{color:var(--b-accent);font-weight:700}
+.b-coord .cell-label::before{content:attr(data-n) " / ";color:var(--b-accent)}
+.coord-big{font:900 30px/1 var(--b-display);font-stretch:125%;letter-spacing:.04em}
+.b-coord .lead{background:var(--b-surface);border:1.5px solid var(--b-fg);border-radius:0;position:relative}
+.b-coord .lead::before{content:"";position:absolute;left:-1.5px;top:-1.5px;width:12px;height:12px;background:var(--b-accent)}
+.b-coord .lead-top{font-family:var(--b-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--b-muted)}
+.b-coord .lead-heat b{font-family:var(--b-mono);color:var(--b-accent)}
+.b-coord .lead-tags span{border:1px solid var(--b-fg);border-radius:0;font-family:var(--b-mono);font-size:11px;letter-spacing:.04em}
+.b-coord .lead-coords{font:500 11.5px/1 var(--b-mono);color:var(--b-blue);letter-spacing:.04em}
+.b-coord .la-primary{background:var(--b-fg);color:var(--b-bg);border-radius:0;font-family:var(--b-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.b-coord .la-secondary{border:1px solid var(--b-fg);border-radius:0;font-family:var(--b-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.b-coord .alertcopy{font-family:var(--b-mono);font-size:13px;border-radius:0;border-color:var(--b-fg);background:var(--b-surface)}
+.b-coord .voice-tags li{font-weight:900;font-stretch:115%;text-transform:uppercase;font-size:18px}
+
+/* ---------- companion ---------- */
+.states{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.state{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}
+.state .k{font:600 13px/1 var(--f-mono);color:var(--fg)}
+.state .when{font-size:13px;color:var(--muted);margin-top:6px}
+.state .mo{font-size:14px;margin-top:8px}
+.inputs{display:flex;flex-direction:column;gap:0;font-size:14px}
+.inputs div{display:grid;grid-template-columns:130px 92px minmax(0,1fr);gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.inputs div:last-child{border-bottom:0}
+.inputs code{font-size:13px;font-weight:600}
+.inputs .t{font:500 12px var(--f-mono);color:var(--muted)}
+.check{display:flex;flex-direction:column;gap:9px;font-size:14.5px}
+.check li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:10px}
+.check li::before{content:"";width:12px;height:12px;border:1.5px solid var(--muted);border-radius:3px;margin-top:5px}
+.prompt{display:flex;flex-direction:column;gap:10px}
+.prompt .ph{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.prompt pre{margin:0;white-space:pre-wrap;font:13px/1.55 var(--f-mono);background:var(--soft);border-radius:10px;padding:12px 14px;color:var(--fg);overflow-wrap:anywhere}
+.copy{font:600 12px/1 var(--f-body);border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:8px;padding:7px 10px;cursor:pointer}
+.copy:hover{border-color:var(--fg)}
+
+/* ---------- decisions ---------- */
+.decide{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.decide .card h3{font-size:18px}
+.opts{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.next{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}
+.next div{border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--surface)}
+.next .n{font:600 12px/1 var(--f-mono);color:var(--muted)}
+.next b{display:block;font-size:17px;margin:8px 0 4px}
+.next p{font-size:14px;color:var(--muted)}
+.reply{margin-top:20px;font-size:15px;padding:16px 20px;border:1px dashed var(--line);border-radius:12px;color:var(--muted)}
+.reply q{color:var(--fg);font-weight:600}
+footer.end{padding-block:40px 64px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font:500 12px/1.5 var(--f-mono);color:var(--muted)}
+
+/* ---------- motion ---------- */
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes ping{0%{transform:scale(.6);opacity:.9}100%{transform:scale(2.4);opacity:0}}
+@keyframes blink{50%{opacity:.35}}
+@keyframes bob{50%{transform:translateY(-8px)}}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .sweep{transform:rotate(40deg)}
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:1060px){
+  .pipe{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .step:nth-child(3)::after{display:none}
+  .g4,.compare,.next{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;padding-block:48px 40px}
+  .sec-head{grid-template-columns:1fr}
+  .g3,.states{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .geo,.g2,.decide{grid-template-columns:1fr}
+  .board-hero{grid-template-columns:1fr;padding:20px 22px 32px}
+  .board-grid>.cell{grid-column:1/-1}
+  .board-head{grid-template-columns:1fr;padding:18px 22px}
+  .board-letter,.board-pitch,.board-tags{grid-row:auto;grid-column:auto}
+  .board-tags{justify-content:flex-start}
+  .mock-links{display:none}
+  .palin{grid-template-columns:1fr}
+  .therm-cards{height:270px}
+}
+@media (max-width:560px){
+  .pipe,.g3,.g4,.states,.compare,.next{grid-template-columns:1fr}
+  .step::after{display:none}
+  .sig{grid-template-columns:1fr}
+  .board-foot,.wordlists{grid-template-columns:1fr}
+  .cell{padding:20px}
+  .inputs div{grid-template-columns:1fr;gap:2px}
+  .addon{grid-template-columns:1fr}
+  .b-blip .board-grid{padding:14px}
+  .b-blip .board-foot{padding:0 14px 14px}
+  .dial,.dial-num{width:124px;height:124px}
+  .dial-num b{font-size:38px}
+}
+</style>
+
+<nav class="nav" aria-label="Sections">
+  <div class="nav-in">
+    <a class="nav-brand" href="#top"><i></i>RADAR</a>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#signals">Signals</a>
+      <a href="#sources">Sources</a>
+      <a href="#geo">Geography</a>
+      <a href="#product">Product</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#market">Market</a>
+      <a href="#risks">Risks</a>
+      <a href="#brand">Brand directions</a>
+      <a href="#companion">Companion</a>
+      <a href="#decide">Your decisions</a>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+
+<header class="hero">
+  <div>
+    <p class="eyebrow">Radar · Kickoff book · v0.1 · Oct 7, 2026</p>
+    <h1>Radar finds the people who are already looking for you.</h1>
+    <p class="lede">Every day, people and companies say what they need in public: a recommendation request in a city subreddit, a complaint about their current provider, a building permit, a new office opening. Radar reads those signals across the web, works out who needs what and where, and puts them in front of the right business while they are still deciding.</p>
+    <div class="toc">
+      <a href="#how">How the platform works</a>
+      <a href="#brand">Four brand directions</a>
+      <a href="#companion">Companion brief</a>
+      <a href="#decide">What I need from you</a>
+    </div>
+  </div>
+  <dl class="meta">
+    <div><span>Company</span><b>Radar</b></div>
+    <div><span>Model</span><b>B2B SaaS, subscription</b></div>
+    <div><span>Customer</span><b>Any business that wants customers</b></div>
+    <div><span>Stage</span><b>Concept</b></div>
+    <div><span>This step</span><b>Pick a brand direction</b></div>
+  </dl>
+</header>
+
+<p class="part">Part 1 · The platform</p>
+
+<!-- HOW IT WORKS -->
+<section class="sec" id="how" aria-labelledby="how-h">
+  <div class="sec-head">
+    <p class="eyebrow">How it works</p>
+    <div>
+      <h2 id="how-h">Six steps from a stranger's post to a booked job</h2>
+      <p class="lede">Radar runs this loop around the clock. The customer only sees the last two steps: a feed of people who need them, and a one-tap way to respond.</p>
+    </div>
+  </div>
+
+  <div class="pipe">
+    <div class="step"><span class="n">01</span><h3>Sweep</h3><p>Collect public posts, comments, news, reviews, permits, filings, job posts and bids from approved sources, every few minutes.</p><span class="out">raw items</span></div>
+    <div class="step"><span class="n">02</span><h3>Understand</h3><p>AI reads each item. Is someone signalling a need? For what kind of business? How urgent? A person or a company?</p><span class="out">intent + category</span></div>
+    <div class="step"><span class="n">03</span><h3>Locate</h3><p>Pin it to a place using what it says, where it was posted, and record addresses. Every lead gets a location confidence.</p><span class="out">place + confidence</span></div>
+    <div class="step"><span class="n">04</span><h3>Match &amp; score</h3><p>Compare it to every Radar customer's profile and range. Score it 0 to 100 on intent, fit, freshness and location.</p><span class="out">Heat score</span></div>
+    <div class="step"><span class="n">05</span><h3>Deliver</h3><p>New leads land on the feed and map. Hot ones trigger push, SMS, email or Slack alerts and sync to the CRM.</p><span class="out">lead card + alert</span></div>
+    <div class="step"><span class="n">06</span><h3>Act &amp; learn</h3><p>Radar drafts a reply in the business's voice. Won, lost and "not a fit" feedback tunes that customer's Radar.</p><span class="out">reply + feedback</span></div>
+  </div>
+
+  <p class="callout"><b>Keeping AI costs sane.</b> Millions of items a day can't all go through a large AI model. Radar uses a funnel: cheap keyword and location filters first, a small fast model to spot real intent, and a larger model only for likely leads and reply drafts. Roughly 1 in 1,000 raw items should reach a customer.</p>
+
+  <div class="grid g2" style="margin-top:28px">
+    <article class="card">
+      <div class="ex-head"><h3>Local example</h3><span class="chip">Sample: Bright Spark Electric · Chicago · 10 mi</span></div>
+      <div class="sig">
+        <div><span class="src">REDDIT · r/chicago · 14 min ago</span><q>Breaker keeps tripping in our 2-flat. Anyone know a licensed electrician in Logan Square who won't charge a fortune?</q></div>
+        <div class="read"><span class="chip">Direct ask</span><span class="chip">Logan Square · 94%</span><span class="heat" style="--v:91%">91 <i></i></span></div>
+      </div>
+      <div class="sig">
+        <div><span class="src">CITY OF CHICAGO · building permits</span><q>Electrical permit issued: kitchen remodel, 2400 block of N Milwaukee Ave.</q></div>
+        <div class="read"><span class="chip">Records</span><span class="chip">Exact block</span><span class="heat" style="--v:72%">72 <i></i></span></div>
+      </div>
+      <div class="sig">
+        <div><span class="src">LOCAL NEWS · this morning</span><q>Storm knocks out power to thousands of homes on the North Side.</q></div>
+        <div class="read"><span class="chip">Area event</span><span class="chip">North Side</span><span class="heat" style="--v:64%">64 <i></i></span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="ex-head"><h3>National B2B example</h3><span class="chip">Sample: Fiberline Business Internet · USA</span></div>
+      <div class="sig">
+        <div><span class="src">CITY BID PORTAL · Boise, ID</span><q>City seeks a broadband provider for 14 municipal sites. Proposals due Nov 14.</q></div>
+        <div class="read"><span class="chip">Bid</span><span class="chip">Boise, ID</span><span class="heat" style="--v:95%">95 <i></i></span></div>
+      </div>
+      <div class="sig">
+        <div><span class="src">NEWS · business journal</span><q>Logistics startup opens a 120-person headquarters in Columbus.</q></div>
+        <div class="read"><span class="chip">New location</span><span class="chip">Columbus, OH</span><span class="heat" style="--v:88%">88 <i></i></span></div>
+      </div>
+      <div class="sig">
+        <div><span class="src">BLUESKY · a Tampa dental group</span><q>Third internet outage at the office this week. Our provider is a joke.</q></div>
+        <div class="read"><span class="chip">Switching</span><span class="chip">Tampa, FL</span><span class="heat" style="--v:83%">83 <i></i></span></div>
+      </div>
+      <p class="cell-note" style="color:var(--muted);font-size:14px;margin-top:8px">For company leads, Radar adds a company profile (size, website, industry) and decision-maker contacts from licensed data providers.</p>
+    </article>
+  </div>
+</section>
+
+<!-- SIGNALS -->
+<section class="sec" id="signals" aria-labelledby="sig-h">
+  <div class="sec-head">
+    <p class="eyebrow">Signals</p>
+    <div>
+      <h2 id="sig-h">The six kinds of buying signals Radar listens for</h2>
+      <p class="lede">Radar serves two kinds of businesses with one engine: ones that sell to people (an electrician) and ones that sell to companies (an internet provider). The signals overlap more than you'd expect.</p>
+    </div>
+  </div>
+  <div class="grid g3">
+    <article class="card sigtype"><p class="label">Asks</p><h3>Someone asks for a recommendation</h3><p>The strongest signal there is. They already want to buy and are choosing who from.</p><p class="q">"Can anyone recommend a good roofer near Oak Park?"</p><p class="from">Reddit · local forums · Bluesky · X · Q&amp;A sites</p></article>
+    <article class="card sigtype"><p class="label">Pain</p><h3>Someone describes the problem you solve</h3><p>They haven't asked for a provider yet, but the need is obvious.</p><p class="q">"Our AC just died and it's 95 out."</p><p class="from">Social posts · comments · forums</p></article>
+    <article class="card sigtype"><p class="label">Switching</p><h3>Someone is unhappy with a competitor</h3><p>Complaints and 1 to 2 star reviews of rivals are customers ready to move.</p><p class="q">"Three no-shows from this company. Never again."</p><p class="from">Review sites · social · forums</p></article>
+    <article class="card sigtype"><p class="label">Moments</p><h3>A life or business event creates a need</h3><p>Moving, buying a home, getting married, opening a shop, raising money, expanding.</p><p class="q">"Just closed on our first house!"</p><p class="from">Social · news · press releases</p></article>
+    <article class="card sigtype"><p class="label">Records</p><h3>Public records point to upcoming work</h3><p>Permits, new business licenses, property sales, incorporations, liquor licenses.</p><p class="q">New restaurant license filed, 1600 W Division St.</p><p class="from">City and state open-data portals</p></article>
+    <article class="card sigtype"><p class="label">Bids &amp; hiring</p><h3>Companies announce what they need</h3><p>RFPs, government tenders, and job posts that imply a purchase.</p><p class="q">"Hiring: Office Manager for our new Denver office."</p><p class="from">Bid portals · SAM.gov · job boards</p></article>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<section class="sec" id="sources" aria-labelledby="src-h">
+  <div class="sec-head">
+    <p class="eyebrow">Sources</p>
+    <div>
+      <h2 id="src-h">Where the data comes from</h2>
+      <p class="lede">"Scour the whole web" needs one rule to keep Radar safe: if a site's terms forbid automated collection, Radar doesn't collect it. That keeps the company out of court, and it becomes a selling point with larger customers.</p>
+    </div>
+  </div>
+  <div class="grid g3">
+    <article class="card tier t-ok">
+      <span class="status"><i></i>Open · launch with these</span>
+      <ul>
+        <li>City and state open-data portals: permits, business licenses, property sales</li>
+        <li>Government bids: SAM.gov plus state and city portals</li>
+        <li>News and press releases (RSS, GDELT)</li>
+        <li>Bluesky, Mastodon, Hacker News</li>
+        <li>YouTube comments via the official API</li>
+        <li>Public company filings</li>
+      </ul>
+      <p class="foot">Free or cheap, legally clean, and rich in local and B2B signals.</p>
+    </article>
+    <article class="card tier t-warn">
+      <span class="status"><i></i>Licensed · pay for access</span>
+      <ul>
+        <li>Reddit data API (paid for commercial use)</li>
+        <li>X API</li>
+        <li>Licensed news and review data feeds</li>
+        <li>Company and contact data providers for B2B enrichment</li>
+        <li>Job-post aggregators</li>
+      </ul>
+      <p class="foot">The biggest cost line after people. Reddit alone is worth it for local asks.</p>
+    </article>
+    <article class="card tier t-bad">
+      <span class="status"><i></i>Restricted · partners only</span>
+      <ul>
+        <li>Facebook groups and Instagram</li>
+        <li>Nextdoor</li>
+        <li>LinkedIn</li>
+        <li>TikTok</li>
+      </ul>
+      <p class="foot">Their terms prohibit scraping. Options later: official partnerships, ad integrations, or a browser extension that highlights signals while the user browses on their own.</p>
+    </article>
+  </div>
+</section>
+
+<!-- GEOGRAPHY -->
+<section class="sec" id="geo" aria-labelledby="geo-h">
+  <div class="sec-head">
+    <p class="eyebrow">Geography</p>
+    <div>
+      <h2 id="geo-h">From one neighborhood to the whole country</h2>
+      <p class="lede">Every signal is pinned to a place and indexed on a hexagon grid (Uber's H3), so "within 10 miles of my shop" and "anywhere in the US" are equally fast, and the map can show demand as a heat layer.</p>
+    </div>
+  </div>
+  <div class="geo">
+    <article class="card">
+      <p class="label">Set your range</p>
+      <div class="chips">
+        <span class="chip on">Radius from address</span><span class="chip">ZIP codes</span><span class="chip">City</span><span class="chip">County</span><span class="chip">Metro area</span><span class="chip">State</span><span class="chip">Country</span><span class="chip">Draw on map</span><span class="chip">Upload coverage map</span><span class="chip">Multiple territories</span>
+      </div>
+      <p class="label" style="margin-top:24px">How Radar finds the location</p>
+      <ol class="howloc">
+        <li><span>Place names in the text: "in Logan Square", "near O'Hare"</span></li>
+        <li><span>Where it was posted: r/chicago, a city forum, a local news outlet</span></li>
+        <li><span>Addresses on records: permits, licenses, filings</span></li>
+        <li><span>Public profile locations and geotags, when present</span></li>
+      </ol>
+      <div class="slider">
+        <div class="row"><span class="label">Location confidence threshold</span><b class="num">80%</b></div>
+        <div class="track" aria-hidden="true"></div>
+        <div class="row" style="margin-top:8px"><span>More leads</span><span>More precise</span></div>
+      </div>
+      <p class="cell-note" style="color:var(--muted);margin-top:16px;font-size:14px">An internet provider can upload its real coverage map, so Radar never shows a lead at an address they can't serve.</p>
+    </article>
+    <figure class="card hexmap" style="margin:0">
+      <svg id="hexsvg" viewBox="0 0 560 360" role="img" aria-label="Illustration: hexagon grid around a shop with a 10 mile range ring. Darker hexagons show more demand."></svg>
+      <figcaption class="cap"><span>Sample demand map · 10 mi range</span><span>Darker = more signals this week</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- PRODUCT -->
+<section class="sec" id="product" aria-labelledby="prod-h">
+  <div class="sec-head">
+    <p class="eyebrow">Product</p>
+    <div>
+      <h2 id="prod-h">What a Radar customer actually uses</h2>
+      <p class="lede">A first pass at the surfaces. We'll trim this to a true MVP in the features step.</p>
+    </div>
+  </div>
+  <div class="grid g3">
+    <article class="card prod"><h3>Setup in 60 seconds <span class="tag">Onboarding</span></h3><p>Paste your website. Radar writes your profile (what you sell, who buys, where you work). Confirm it, set your range, and Radar backfills the last 30 days so the first screen is never empty.</p></article>
+    <article class="card prod"><h3>Radar screen <span class="tag">Home</span></h3><p>A live feed and a map side by side. Filter by heat, signal type, source and area. New leads arrive in real time.</p></article>
+    <article class="card prod"><h3>Lead card <span class="tag">Detail</span></h3><p>The original post, why it matched, the Heat breakdown, location, an AI-drafted reply, and one tap to open the thread.</p></article>
+    <article class="card prod"><h3>Alerts <span class="tag">Mobile</span></h3><p>Push, SMS, email and Slack, with quiet hours. Tradespeople live on their phones, so the mobile alert is the product for many customers.</p></article>
+    <article class="card prod"><h3>Pipeline <span class="tag">Results</span></h3><p>New, contacted, won, lost. Logging revenue on won leads proves Radar pays for itself, which drives renewals.</p></article>
+    <article class="card prod"><h3>Integrations <span class="tag">Sync</span></h3><p>HubSpot, Salesforce, Pipedrive, and the trade tools (Jobber, ServiceTitan, Housecall Pro), plus Zapier and webhooks.</p></article>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="sec" id="pricing" aria-labelledby="price-h">
+  <div class="sec-head">
+    <p class="eyebrow">Business model</p>
+    <div>
+      <h2 id="price-h">Flat subscriptions, priced by range</h2>
+      <p class="lede">Lead marketplaces charge per lead and sell the same lead to several competitors. Radar charges a flat monthly fee, so the business keeps every customer it wins. These prices are a starting point for discussion.</p>
+    </div>
+  </div>
+  <div class="grid g4">
+    <article class="card plan"><p class="label">Local</p><p class="price num">$149<small> /mo</small></p><p>One shop, one service area.</p><ul><li>1 Radar, up to 25 mi</li><li>Mobile and SMS alerts</li><li>AI reply drafts</li><li>1 seat</li></ul></article>
+    <article class="card plan feature"><p class="label">Growth</p><p class="price num">$399<small> /mo</small></p><p>Multi-location or metro-wide.</p><ul><li>5 Radars, metro or state</li><li>CRM sync</li><li>Map and heat layers</li><li>3 seats</li></ul></article>
+    <article class="card plan"><p class="label">National</p><p class="price num">$999<small> /mo</small></p><p>Country-wide sellers.</p><ul><li>Unlimited Radars, any range</li><li>Company enrichment credits</li><li>API and webhooks</li><li>10 seats</li></ul></article>
+    <article class="card plan"><p class="label">Enterprise</p><p class="price">Custom</p><p>Franchises and large sales teams.</p><ul><li>Territory routing per branch</li><li>SSO and audit logs</li><li>Custom sources</li><li>Dedicated support</li></ul></article>
+  </div>
+  <article class="card addon">
+    <h3>Add-on: Territory Lock</h3>
+    <p>Public posts are visible to anyone, so two electricians on Radar in the same ZIP would see the same lead. Territory Lock caps how many businesses in one category get leads in your ZIP codes. It's a strong upsell and a reason to sign up before a competitor does.</p>
+  </article>
+</section>
+
+<!-- MARKET -->
+<section class="sec" id="market" aria-labelledby="mkt-h">
+  <div class="sec-head">
+    <p class="eyebrow">Market</p>
+    <div>
+      <h2 id="mkt-h">Where Radar fits</h2>
+      <p class="lede">Every category below solves part of the problem. None of them combine live intent, geography and a price any business can pay.</p>
+    </div>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Category</th><th>Examples</th><th>What they do</th><th>The gap</th></tr></thead>
+      <tbody>
+        <tr><td>Lead marketplaces</td><td class="m">Angi, Thumbtack, Yelp, Google Local Services</td><td>Sell leads one at a time</td><td>Leads are shared with several competitors and get expensive</td></tr>
+        <tr><td>Contact databases</td><td class="m">ZoomInfo, Apollo</td><td>Lists of companies and people</td><td>Static, cold, and B2B only. Nobody on the list asked for anything</td></tr>
+        <tr><td>Social listening</td><td class="m">Brandwatch, Sprout Social, Meltwater</td><td>Track brand mentions</td><td>Built for marketing teams watching their own brand, with enterprise prices</td></tr>
+        <tr><td>Intent data</td><td class="m">6sense, Bombora</td><td>Company-level buying intent</td><td>Enterprise B2B only. No local or consumer demand</td></tr>
+        <tr><td>Keyword alerts</td><td class="m">F5Bot, Syften</td><td>Keyword matches on Reddit and Hacker News</td><td>No AI understanding, no geography, no scoring</td></tr>
+        <tr class="us"><td>Radar</td><td class="m">You</td><td>AI-understood intent from people and companies</td><td>Filtered by geography, scored, with replies drafted, at an SMB price</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid g2" style="margin-top:28px">
+    <article class="card wedge">
+      <p class="label">Recommended launch market 1</p>
+      <h3>Home services</h3>
+      <p>High job values, deep frustration with shared leads, lots of public "anyone know a…" posts, and geography matters to every one of them.</p>
+      <div class="who"><span class="chip">Electricians</span><span class="chip">Plumbers</span><span class="chip">HVAC</span><span class="chip">Roofers</span><span class="chip">Remodelers</span></div>
+    </article>
+    <article class="card wedge">
+      <p class="label">Recommended launch market 2</p>
+      <h3>B2B services</h3>
+      <p>Larger contracts and strong company signals: new offices, hiring, bids, provider complaints. Proves the national, company-lead side of the engine.</p>
+      <div class="who"><span class="chip">IT providers</span><span class="chip">Business internet</span><span class="chip">Commercial cleaning</span><span class="chip">Agencies</span></div>
+    </article>
+  </div>
+  <div class="later"><span class="label">Then expand with industry templates</span><span class="chip">Radar for Realtors</span><span class="chip">Radar for Dentists</span><span class="chip">Radar for Law Firms</span><span class="chip">Radar for Gyms</span><span class="chip">Radar for Restaurants</span></div>
+  <p class="callout"><b>Build for every business, launch with a few.</b> The engine is horizontal from day one. Marketing that speaks to "any business" converts worse than marketing that speaks to electricians, so the website and ads should lead with a couple of industries and add more as templates.</p>
+</section>
+
+<!-- RISKS -->
+<section class="sec" id="risks" aria-labelledby="risk-h">
+  <div class="sec-head">
+    <p class="eyebrow">Risks</p>
+    <div>
+      <h2 id="risk-h">Risks and the guardrails for each</h2>
+    </div>
+  </div>
+  <div class="grid g3">
+    <article class="card risk"><p class="label">Data access</p><h3>Sources change terms and prices</h3><p>Spread signals across many sources so no single one is fatal, and sign contracts for the key ones.</p></article>
+    <article class="card risk"><p class="label">Privacy</p><h3>Consumer posts contain personal data</h3><p>Store the minimum, never build profiles of private people, honor deletion requests, and follow GDPR and CCPA.</p></article>
+    <article class="card risk"><p class="label">Outreach law</p><h3>Spam rules are strict</h3><p>No automated texts or calls to consumers (TCPA). CAN-SPAM for email. Radar drafts replies; a human sends them.</p></article>
+    <article class="card risk"><p class="label">Signal density</p><h3>Small towns are quieter</h3><p>A rural plumber sees fewer posts than one in Chicago. Records and news fill the gap. Show expected volume before purchase.</p></article>
+    <article class="card risk"><p class="label">Shared leads</p><h3>Competitors may see the same post</h3><p>Territory Lock limits overlap, and instant alerts mean the fastest useful reply usually wins.</p></article>
+    <article class="card risk"><p class="label">Name</p><h3>"Radar" is a crowded name</h3><p>Radar Labs (radar.com) is an established location-data company. Run a trademark search in classes 35 and 42 and settle the domain early.</p></article>
+  </div>
+</section>
+
+<p class="part" id="brand">Part 2 · Brand directions</p>
+
+<!-- BRAND INTRO -->
+<section class="sec" aria-labelledby="brand-h" style="border-top:0;padding-top:40px">
+  <div class="sec-head">
+    <p class="eyebrow">Brand</p>
+    <div>
+      <h2 id="brand-h">Four directions to choose from</h2>
+      <p class="lede">Each one has its own logo idea, palette, type, voice and companion concept. Pick one, or tell me what to combine. Everything shown is a sample; the brandkit comes after you approve.</p>
+    </div>
+  </div>
+  <div class="palin">
+    <p class="word" aria-label="RADAR"><span>R</span><span>A</span><span>D</span><span>A</span><span>R</span></p>
+    <p>A detail every direction can use: <b style="color:var(--fg)">RADAR is a palindrome.</b> It reads the same in both directions, which matches the product. You find customers, and customers find you. The D sits at the center, so several logos give it the accent.</p>
+  </div>
+  <div class="compare">
+    <a class="cmp cmp-a" href="#dir-a">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="28" fill="none" stroke="#B6FF3B" stroke-width="3.5"/><circle cx="32" cy="32" r="16" fill="none" stroke="#B6FF3B" stroke-opacity=".4" stroke-width="2.5"/><path d="M32 32V4a28 28 0 0 1 24.25 14Z" fill="#B6FF3B" fill-opacity=".35"/><path d="M32 32 56.25 18" stroke="#B6FF3B" stroke-width="3.5" stroke-linecap="round"/><circle cx="22" cy="41" r="4" fill="#B6FF3B"/></svg>
+      <b>A · Phosphor</b><span>Dark · technical · live radar</span>
+    </a>
+    <a class="cmp cmp-b" href="#dir-b">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#3D0C7A"/><circle cx="34" cy="30" r="23" fill="#B5179E"/><circle cx="36" cy="28" r="16" fill="#FF4A1C"/><circle cx="38" cy="26" r="9" fill="#FFB21A"/><circle cx="39" cy="25" r="3.5" fill="#FFF0A0"/></svg>
+      <b>B · Thermal</b><span>Warm · bold · energetic</span>
+    </a>
+    <a class="cmp cmp-c" href="#dir-c">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4C16.5 4 4 15.6 4 30c0 7.4 3.3 14 8.6 18.8L10 60l13.2-6.3c2.8.8 5.8 1.3 8.8 1.3 15.5 0 28-11.6 28-26S47.5 4 32 4z" fill="#2D5BFF" stroke="#101533" stroke-width="3"/><circle cx="32" cy="30" r="6" fill="#fff"/><path d="M21 19a15 15 0 0 0 0 22M43 19a15 15 0 0 1 0 22" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/></svg>
+      <b>C · Blip</b><span>Friendly · mascot-led · rounded</span>
+    </a>
+    <a class="cmp cmp-d" href="#dir-d">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="19" fill="none" stroke="#151515" stroke-width="4"/><path d="M32 2v15M32 47v15M2 32h15M47 32h15" stroke="#151515" stroke-width="4"/><circle cx="40" cy="24" r="6" fill="#FF5A1F"/></svg>
+      <b>D · Coordinates</b><span>Map-led · precise · editorial</span>
+    </a>
+  </div>
+
+  <!-- ================= A: PHOSPHOR ================= -->
+  <article class="board b-phos" id="dir-a" aria-labelledby="dir-a-name">
+    <header class="board-head">
+      <span class="board-letter">Direction A</span>
+      <h3 class="board-name" id="dir-a-name">Phosphor</h3>
+      <p class="board-pitch">Mission control for finding customers. Dark, precise, and glowing like a real radar scope.</p>
+      <ul class="board-tags"><li>Dark UI</li><li>Technical</li><li>Live radar</li></ul>
+    </header>
+    <div class="board-hero">
+      <div class="mock-nav">
+        <span class="lockup">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="28" fill="none" stroke="#B6FF3B" stroke-width="4"/><path d="M32 32V4a28 28 0 0 1 24.25 14Z" fill="#B6FF3B" fill-opacity=".35"/><path d="M32 32 56.25 18" stroke="#B6FF3B" stroke-width="4" stroke-linecap="round"/><circle cx="22" cy="41" r="4.5" fill="#B6FF3B"/></svg>
+          <span class="phos-wm">RA<em>D</em>AR</span>
+        </span>
+        <span class="mock-links"><span>Product</span><span>Signals</span><span>Pricing</span><span>Log in</span></span>
+        <span class="phos-btn">Start a sweep</span>
+      </div>
+      <div class="hero-copy">
+        <p class="phos-kicker"><i></i>LIVE · 41.8781° N · 87.6298° W</p>
+        <p class="phos-h">Lock on<br>to demand.</p>
+        <p class="phos-sub">Radar sweeps the web for people who need what you sell and puts them on your screen first.</p>
+        <div class="ctas"><span class="btn-lime">Start free sweep</span><span class="btn-ghost">Watch it work</span></div>
+      </div>
+      <div class="hero-vis">
+        <div class="scope-wrap">
+          <div class="scope" aria-hidden="true">
+            <div class="sweep"></div>
+            <span class="blip" style="--x:64%;--y:28%"></span>
+            <span class="blip hot" style="--x:38%;--y:57%"></span>
+            <span class="blip" style="--x:71%;--y:67%"></span>
+            <span class="blip" style="--x:27%;--y:33%"></span>
+            <span class="blip" style="--x:55%;--y:82%"></span>
+          </div>
+          <span class="scope-tag">HEAT 91 · LOGAN SQ · 1.2 MI</span>
+          <div class="scope-meta"><span>RANGE 10 MI</span><span>5 BLIPS</span><span>SWEEP 04.5S</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="board-grid">
+      <section class="cell c-logo">
+        <p class="cell-label">Logo</p>
+        <div class="logo-stage">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="phg1" x1="32" y1="32" x2="58" y2="10" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#B6FF3B" stop-opacity=".02"/><stop offset="1" stop-color="#B6FF3B" stop-opacity=".6"/></linearGradient></defs><circle cx="32" cy="32" r="28" fill="none" stroke="#B6FF3B" stroke-width="3"/><circle cx="32" cy="32" r="16" fill="none" stroke="#B6FF3B" stroke-opacity=".4" stroke-width="2"/><path d="M32 32V4a28 28 0 0 1 24.25 14Z" fill="url(#phg1)"/><path d="M32 32 56.25 18" stroke="#B6FF3B" stroke-width="3" stroke-linecap="round"/><circle cx="22" cy="41" r="3.5" fill="#B6FF3B"/></svg>
+          <span class="phos-big">RA<em>D</em>AR</span>
+        </div>
+        <div class="logo-row">
+          <div class="appicon" style="background:#B6FF3B"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="28" fill="none" stroke="#06080A" stroke-width="4.5"/><path d="M32 32V4a28 28 0 0 1 24.25 14Z" fill="#06080A" fill-opacity=".3"/><path d="M32 32 56.25 18" stroke="#06080A" stroke-width="4.5" stroke-linecap="round"/><circle cx="22" cy="41" r="5" fill="#06080A"/></svg></div>
+          <div class="appicon" style="background:#0E1216;border:1px solid #1C252B"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="28" fill="none" stroke="#B6FF3B" stroke-width="4.5"/><path d="M32 32V4a28 28 0 0 1 24.25 14Z" fill="#B6FF3B" fill-opacity=".3"/><path d="M32 32 56.25 18" stroke="#B6FF3B" stroke-width="4.5" stroke-linecap="round"/><circle cx="22" cy="41" r="5" fill="#B6FF3B"/></svg></div>
+          <div class="logo-chip" style="background:#E6F2E9;color:#06080A"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="28" fill="none" stroke="#06080A" stroke-width="5"/><path d="M32 32 56.25 18" stroke="#06080A" stroke-width="5" stroke-linecap="round"/><circle cx="22" cy="41" r="5.5" fill="#06080A"/></svg><span class="phos-wm" style="font-size:13px">RADAR</span></div>
+        </div>
+        <p class="cell-note">The sweep wedge is the mark. In the product it rotates while Radar scans, and a full turn means a fresh sweep.</p>
+      </section>
+      <section class="cell c-pal">
+        <p class="cell-label">Palette</p>
+        <div class="sws">
+          <div class="sw" style="--c:#06080A"><i></i><b>Void</b><code>#06080A</code><span>Background</span></div>
+          <div class="sw" style="--c:#0E1216"><i></i><b>Console</b><code>#0E1216</code><span>Surfaces</span></div>
+          <div class="sw" style="--c:#1C252B"><i></i><b>Gridline</b><code>#1C252B</code><span>Lines</span></div>
+          <div class="sw" style="--c:#B6FF3B"><i></i><b>Phosphor</b><code>#B6FF3B</code><span>Signal, primary</span></div>
+          <div class="sw" style="--c:#E6F2E9"><i></i><b>Ghost</b><code>#E6F2E9</code><span>Text</span></div>
+          <div class="sw" style="--c:#FF6B2C"><i></i><b>Flare</b><code>#FF6B2C</code><span>Hot leads</span></div>
+        </div>
+      </section>
+      <section class="cell c-type">
+        <p class="cell-label">Type</p>
+        <div class="spec"><span class="aa" style="font-family:var(--b-display);font-weight:800">Aa</span><div><b>Unbounded</b><small>Display · 600 / 800 · all caps</small></div><p class="sample" style="font-family:var(--b-display);font-weight:600;text-transform:uppercase;letter-spacing:.04em">12 new blips in range</p></div>
+        <div class="spec"><span class="aa" style="font-weight:500">Aa</span><div><b>Geist</b><small>Interface and body · 400 / 600</small></div><p class="sample">Radar found 3 people asking for an electrician within 2 miles of your shop.</p></div>
+        <div class="spec"><span class="aa" style="font-family:var(--b-mono);font-size:40px">01</span><div><b>Geist Mono</b><small>Data, coordinates, labels</small></div><p class="sample" style="font-family:var(--b-mono);color:var(--b-accent)">HEAT 91 · 1.2 MI · 14 MIN AGO</p></div>
+      </section>
+      <section class="cell c-ui">
+        <p class="cell-label">Lead card</p>
+        <div class="lead">
+          <div class="lead-top"><span class="lead-src">r/chicago</span><span>14 MIN AGO</span><span class="lead-heat"><b>91</b>HEAT</span></div>
+          <p class="lead-quote">"Breaker keeps tripping in our 2-flat. Anyone know a licensed electrician in Logan Square who won't charge a fortune?"</p>
+          <div class="lead-tags"><span>DIRECT ASK</span><span>RESIDENTIAL ELECTRICAL</span><span>LOGAN SQ · 1.2 MI</span></div>
+          <div class="lead-actions"><span class="la-primary">Draft reply</span><span class="la-secondary">Open thread</span></div>
+        </div>
+        <p class="cell-note">Sample content.</p>
+      </section>
+      <section class="cell c-voice">
+        <p class="cell-label">Voice · terse, confident, tactical</p>
+        <ul class="voice-tags"><li>Lock on to demand.</li><li>See demand before your competitors do.</li><li>Every customer, on your screen.</li></ul>
+        <p class="alertcopy">Sweep complete. 12 new blips in range, 3 running hot.</p>
+        <div class="wordlists"><div><b>Say</b>blips, sweep, range, lock on, signal</div><div><b>Avoid</b>leads list, database, "synergy"</div></div>
+      </section>
+      <section class="cell c-comp">
+        <p class="cell-label">Companion idea</p>
+        <div class="comp-art">
+          <svg viewBox="0 0 160 140" aria-hidden="true"><ellipse cx="80" cy="128" rx="40" ry="6" fill="#B6FF3B" fill-opacity=".15"/><path d="M80 22v-12" stroke="#7F9087" stroke-width="3" stroke-linecap="round"/><circle cx="80" cy="8" r="4" fill="#B6FF3B"/><rect x="30" y="22" width="100" height="88" rx="44" fill="#0E1216" stroke="#2A363D" stroke-width="2"/><circle cx="80" cy="64" r="28" fill="#06080A" stroke="#B6FF3B" stroke-width="2.5"/><circle cx="80" cy="64" r="16" fill="none" stroke="#B6FF3B" stroke-opacity=".35" stroke-width="1.5"/><path d="M80 64 99 50" stroke="#B6FF3B" stroke-width="3" stroke-linecap="round"/><circle cx="80" cy="64" r="4" fill="#B6FF3B"/><path d="M30 66H16M144 66h-14" stroke="#2A363D" stroke-width="4" stroke-linecap="round"/></svg>
+        </div>
+        <p>A palm-sized scout drone with one big eye that works like a radar scope. It hovers in the corner of the dashboard, and its eye sweeps while Radar scans.</p>
+      </section>
+    </div>
+    <footer class="board-foot">
+      <div><b>Best for</b>Tech-forward buyers, agencies and sales teams. Feels powerful and premium, and looks great in demos.</div>
+      <div><b>Watch out</b>Can feel intimidating to a plumber or salon owner. Dark screens are harder to read on a phone in daylight.</div>
+    </footer>
+  </article>
+
+  <!-- ================= B: THERMAL ================= -->
+  <article class="board b-therm" id="dir-b" aria-labelledby="dir-b-name">
+    <header class="board-head">
+      <span class="board-letter">Direction B</span>
+      <h3 class="board-name" id="dir-b-name">Thermal</h3>
+      <p class="board-pitch">Find the heat. Warm, bold and energetic, built on the "hot lead" idea every salesperson already uses.</p>
+      <ul class="board-tags"><li>Heat gradients</li><li>Bold type</li><li>Energetic</li></ul>
+    </header>
+    <div class="board-hero">
+      <div class="therm-blobs" aria-hidden="true"></div>
+      <div class="grain" aria-hidden="true"></div>
+      <div class="mock-nav">
+        <span class="lockup">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#3D0C7A"/><circle cx="34" cy="30" r="23" fill="#B5179E"/><circle cx="36" cy="28" r="16" fill="#FF4A1C"/><circle cx="38" cy="26" r="9" fill="#FFB21A"/><circle cx="39" cy="25" r="3.5" fill="#FFF0A0"/></svg>
+          <span class="therm-wm">radar</span>
+        </span>
+        <span class="mock-links" style="color:#4A2A45"><span>How it works</span><span>Industries</span><span>Pricing</span></span>
+        <span class="therm-btn">Get hot leads</span>
+      </div>
+      <div class="hero-copy">
+        <p class="therm-h">Find<br>the <em>heat.</em></p>
+        <p class="therm-sub">Radar spots people who need what you sell, right now and right near you.</p>
+        <div class="ctas"><span class="btn-ink">Show me hot leads</span><span class="btn-line">How it works</span></div>
+      </div>
+      <div class="hero-vis">
+        <div class="therm-cards" aria-hidden="true">
+          <div class="dial"></div>
+          <div class="dial-num"><div><b class="num">94</b><span>Heat</span></div></div>
+          <div class="therm-chip"><b>Wicker Park is heating up</b><span>3 people asked for an electrician in the last hour</span><div class="bar"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="board-grid">
+      <section class="cell c-logo">
+        <p class="cell-label">Logo</p>
+        <div class="logo-stage">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#3D0C7A"/><circle cx="34" cy="30" r="23" fill="#B5179E"/><circle cx="36" cy="28" r="16" fill="#FF4A1C"/><circle cx="38" cy="26" r="9" fill="#FFB21A"/><circle cx="39" cy="25" r="3.5" fill="#FFF0A0"/></svg>
+          <span class="therm-big">radar</span>
+        </div>
+        <div class="logo-row">
+          <div class="appicon" style="background:#1C0A1F"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#3D0C7A"/><circle cx="34" cy="30" r="23" fill="#B5179E"/><circle cx="36" cy="28" r="16" fill="#FF4A1C"/><circle cx="38" cy="26" r="9" fill="#FFB21A"/><circle cx="39" cy="25" r="3.5" fill="#FFF0A0"/></svg></div>
+          <div class="appicon" style="background:linear-gradient(135deg,#3D0C7A,#B5179E 40%,#FF4A1C 75%,#FFB21A)"><span style="font:800 22px/1 var(--b-display);letter-spacing:-.05em;color:#FFF8F3">r.</span></div>
+          <div class="logo-chip" style="background:#1C0A1F;color:#FFF8F3"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#B5179E"/><circle cx="36" cy="28" r="18" fill="#FF4A1C"/><circle cx="38" cy="26" r="8" fill="#FFB21A"/></svg><span style="font:800 16px/1 var(--b-display);letter-spacing:-.04em">radar</span></div>
+        </div>
+        <p class="cell-note">A heat bloom: rings of temperature drifting toward one hot spot, the customer. Works at favicon size.</p>
+      </section>
+      <section class="cell c-pal">
+        <p class="cell-label">Palette</p>
+        <div class="heatbar" aria-hidden="true"></div>
+        <div class="heatbar-labels"><span>COLD 0</span><span>WARM 50</span><span>HOT 100</span></div>
+        <div class="sws">
+          <div class="sw" style="--c:#1C0A1F"><i></i><b>Ink</b><code>#1C0A1F</code><span>Text</span></div>
+          <div class="sw" style="--c:#FFF8F3"><i></i><b>Paper</b><code>#FFF8F3</code><span>Background</span></div>
+          <div class="sw" style="--c:#3D0C7A"><i></i><b>Ultraviolet</b><code>#3D0C7A</code><span>Cold</span></div>
+          <div class="sw" style="--c:#B5179E"><i></i><b>Magenta</b><code>#B5179E</code><span>Warm</span></div>
+          <div class="sw" style="--c:#FF4A1C"><i></i><b>Ignite</b><code>#FF4A1C</code><span>Primary, hot</span></div>
+          <div class="sw" style="--c:#FFB21A"><i></i><b>Amber</b><code>#FFB21A</code><span>Hotter</span></div>
+        </div>
+      </section>
+      <section class="cell c-type">
+        <p class="cell-label">Type</p>
+        <div class="spec"><span class="aa" style="font-weight:800;font-stretch:76%;letter-spacing:-.04em">Aa</span><div><b>Bricolage Grotesque Condensed</b><small>Display · 800 · tight</small></div><p class="sample" style="font-weight:800;font-stretch:78%;font-size:24px;letter-spacing:-.03em">Your next customer is warming up.</p></div>
+        <div class="spec"><span class="aa" style="font-weight:400">Aa</span><div><b>Bricolage Grotesque</b><small>Body · 400 / 600</small></div><p class="sample">One family with real character carries the whole brand, from billboard headlines to settings screens.</p></div>
+        <div class="spec"><span class="aa" style="font-family:var(--b-mono);font-size:40px">94</span><div><b>Geist Mono</b><small>Heat scores and data</small></div><p class="sample" style="font-family:var(--b-mono)">HEAT 94 · 0.6 MI · 6 MIN AGO</p></div>
+      </section>
+      <section class="cell c-ui">
+        <p class="cell-label">Lead card</p>
+        <div class="lead">
+          <div class="lead-top"><span class="lead-src">r/chicago</span><span>14 min ago</span><span class="lead-heat"><b>91</b>heat</span></div>
+          <div class="bar" aria-hidden="true"></div>
+          <p class="lead-quote">"Breaker keeps tripping in our 2-flat. Anyone know a licensed electrician in Logan Square who won't charge a fortune?"</p>
+          <div class="lead-tags"><span>Direct ask</span><span>Residential electrical</span><span>Logan Square · 1.2 mi</span></div>
+          <div class="lead-actions"><span class="la-primary">Draft reply</span><span class="la-secondary">Open thread</span></div>
+        </div>
+        <p class="cell-note">Sample content.</p>
+      </section>
+      <section class="cell c-voice">
+        <p class="cell-label">Voice · warm, punchy, upbeat</p>
+        <ul class="voice-tags"><li>Find the heat.</li><li>Your next customer is warming up.</li><li>Hot leads. Near you. Right now.</li></ul>
+        <p class="alertcopy">Wicker Park is heating up: 3 people asked for an electrician in the last hour.</p>
+        <div class="wordlists"><div><b>Say</b>heat, hot, warming up, glow, nearby</div><div><b>Avoid</b>cold outreach, blast, scrape</div></div>
+      </section>
+      <section class="cell c-comp">
+        <p class="cell-label">Companion idea</p>
+        <div class="comp-art">
+          <svg viewBox="0 0 160 140" aria-hidden="true"><defs><radialGradient id="emb" cx="55%" cy="60%" r="60%"><stop offset="0" stop-color="#FFF0A0"/><stop offset=".35" stop-color="#FFB21A"/><stop offset=".7" stop-color="#FF4A1C"/><stop offset="1" stop-color="#B5179E"/></radialGradient></defs><ellipse cx="80" cy="130" rx="38" ry="6" fill="#B5179E" fill-opacity=".18"/><path d="M80 12c10 14 34 26 38 58 4 30-16 52-38 52s-42-22-38-52c3-22 18-30 24-44 4 10 8 14 14 14 0-12-4-18 0-28z" fill="url(#emb)"/><ellipse cx="68" cy="82" rx="5" ry="7" fill="#1C0A1F"/><ellipse cx="92" cy="82" rx="5" ry="7" fill="#1C0A1F"/><path d="M73 98q7 6 14 0" stroke="#1C0A1F" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>
+        </div>
+        <p>A soft ember creature whose glow tracks the Heat score. Calm orange when idle, white-hot when a lead scores 90 or above.</p>
+      </section>
+    </div>
+    <footer class="board-foot">
+      <div><b>Best for</b>The broadest small-business appeal: home services, local shops, restaurants, fitness. Easy to explain in one line.</div>
+      <div><b>Watch out</b>Gradients need strict rules or the brand gets loud. The heat idea only works if the Heat score is genuinely useful.</div>
+    </footer>
+  </article>
+
+  <!-- ================= C: BLIP ================= -->
+  <article class="board b-blip" id="dir-c" aria-labelledby="dir-c-name">
+    <header class="board-head">
+      <span class="board-letter">Direction C</span>
+      <h3 class="board-name" id="dir-c-name">Blip</h3>
+      <p class="board-pitch">A friendly customer-finder with a face. Bright, rounded, and built around the Rive companion.</p>
+      <ul class="board-tags"><li>Mascot-led</li><li>Playful</li><li>Rounded</li></ul>
+    </header>
+    <div class="board-hero">
+      <div class="mock-nav">
+        <span class="lockup">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4C16.5 4 4 15.6 4 30c0 7.4 3.3 14 8.6 18.8L10 60l13.2-6.3c2.8.8 5.8 1.3 8.8 1.3 15.5 0 28-11.6 28-26S47.5 4 32 4z" fill="#2D5BFF" stroke="#101533" stroke-width="3.5"/><circle cx="32" cy="30" r="6" fill="#fff"/><path d="M21 19a15 15 0 0 0 0 22M43 19a15 15 0 0 1 0 22" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/></svg>
+          <span class="blip-wm">radar</span>
+        </span>
+        <span class="mock-links" style="color:#2A315C;font-weight:600"><span>How it works</span><span>Meet Blip</span><span>Pricing</span></span>
+        <span class="blip-btn">Try it free</span>
+      </div>
+      <div class="hero-copy">
+        <p class="blip-h">Radar finds <em>your people.</em></p>
+        <p class="blip-sub">Tell Radar what you do and where. It finds folks asking for exactly that and taps you on the shoulder.</p>
+        <div class="ctas"><span class="btn-blue">Find my customers</span><span class="btn-white">Meet Blip</span></div>
+      </div>
+      <div class="hero-vis">
+        <div class="buddy-wrap">
+          <div class="bubble">Psst! 8 people near you need an electrician.</div>
+          <svg class="buddy" viewBox="0 0 240 250" role="img" aria-label="Placeholder companion sketch: a round blue robot with an antenna">
+            <g stroke="#101533" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M120 70V40" fill="none"/>
+              <path d="M146 18a28 28 0 0 1 0 26M158 8a42 42 0 0 1 0 46M94 18a28 28 0 0 0 0 26M82 8a42 42 0 0 0 0 46" fill="none"/>
+              <circle cx="120" cy="31" r="11" fill="#FFD43B"/>
+              <ellipse cx="88" cy="228" rx="22" ry="12" fill="#2D5BFF"/>
+              <ellipse cx="152" cy="228" rx="22" ry="12" fill="#2D5BFF"/>
+              <rect x="34" y="68" width="172" height="162" rx="81" fill="#2D5BFF"/>
+              <rect x="62" y="98" width="116" height="84" rx="38" fill="#FFFFFF"/>
+              <path d="M204 152q30-8 30-46" fill="none"/>
+              <path d="M36 158q-24 10-22 34" fill="none"/>
+            </g>
+            <ellipse cx="98" cy="136" rx="8" ry="12" fill="#101533"/>
+            <ellipse cx="142" cy="136" rx="8" ry="12" fill="#101533"/>
+            <circle cx="101" cy="131" r="2.6" fill="#fff"/>
+            <circle cx="145" cy="131" r="2.6" fill="#fff"/>
+            <circle cx="79" cy="160" r="7" fill="#FF7EB6"/>
+            <circle cx="161" cy="160" r="7" fill="#FF7EB6"/>
+            <path d="M110 160q10 9 20 0" stroke="#101533" stroke-width="5" fill="none" stroke-linecap="round"/>
+          </svg>
+          <span class="sticker st1">3 new!</span>
+          <span class="sticker st2">Nice catch</span>
+        </div>
+      </div>
+    </div>
+    <div class="board-grid">
+      <section class="cell c-logo">
+        <p class="cell-label">Logo</p>
+        <div class="logo-stage">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4C16.5 4 4 15.6 4 30c0 7.4 3.3 14 8.6 18.8L10 60l13.2-6.3c2.8.8 5.8 1.3 8.8 1.3 15.5 0 28-11.6 28-26S47.5 4 32 4z" fill="#2D5BFF" stroke="#101533" stroke-width="3"/><circle cx="32" cy="30" r="6" fill="#fff"/><path d="M21 19a15 15 0 0 0 0 22M43 19a15 15 0 0 1 0 22" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/></svg>
+          <span class="blip-big">radar</span>
+        </div>
+        <div class="logo-row">
+          <div class="appicon" style="background:#2D5BFF;border:2.5px solid #101533;box-shadow:3px 3px 0 #101533"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="7" fill="#fff"/><path d="M18 18a20 20 0 0 0 0 28M46 18a20 20 0 0 1 0 28" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/></svg></div>
+          <div class="appicon" style="background:#FFD43B;border:2.5px solid #101533;box-shadow:3px 3px 0 #101533"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="12" y="16" width="40" height="36" rx="18" fill="#2D5BFF" stroke="#101533" stroke-width="3"/><rect x="19" y="24" width="26" height="18" rx="9" fill="#fff"/><circle cx="27" cy="33" r="2.6" fill="#101533"/><circle cx="37" cy="33" r="2.6" fill="#101533"/><path d="M32 16V8" stroke="#101533" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="7" r="3.5" fill="#FF7EB6" stroke="#101533" stroke-width="2"/></svg></div>
+          <div class="logo-chip" style="background:#101533;color:#fff"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4C16.5 4 4 15.6 4 30c0 7.4 3.3 14 8.6 18.8L10 60l13.2-6.3c2.8.8 5.8 1.3 8.8 1.3 15.5 0 28-11.6 28-26S47.5 4 32 4z" fill="#FFD43B"/><circle cx="32" cy="30" r="6" fill="#101533"/><path d="M21 19a15 15 0 0 0 0 22M43 19a15 15 0 0 1 0 22" stroke="#101533" stroke-width="4" fill="none" stroke-linecap="round"/></svg><span style="font:700 17px/1 var(--b-display)">radar</span></div>
+        </div>
+        <p class="cell-note">A speech bubble with a ping inside: someone asking, and Radar hearing it. The companion can stand in as an alternate app icon.</p>
+      </section>
+      <section class="cell c-pal">
+        <p class="cell-label">Palette</p>
+        <div class="sws">
+          <div class="sw" style="--c:#2D5BFF"><i></i><b>Radar Blue</b><code>#2D5BFF</code><span>Primary</span></div>
+          <div class="sw" style="--c:#101533"><i></i><b>Midnight</b><code>#101533</code><span>Text, outlines</span></div>
+          <div class="sw" style="--c:#EEF2FF"><i></i><b>Cloud</b><code>#EEF2FF</code><span>Background</span></div>
+          <div class="sw" style="--c:#FFD43B"><i></i><b>Sunbeam</b><code>#FFD43B</code><span>Highlight</span></div>
+          <div class="sw" style="--c:#FF7EB6"><i></i><b>Bubblegum</b><code>#FF7EB6</code><span>Delight, hot</span></div>
+          <div class="sw" style="--c:#35D49A"><i></i><b>Mint</b><code>#35D49A</code><span>Won, success</span></div>
+        </div>
+      </section>
+      <section class="cell c-type">
+        <p class="cell-label">Type</p>
+        <div class="spec"><span class="aa" style="font-family:var(--b-display);font-weight:700">Aa</span><div><b>Fredoka</b><small>Display · 600 / 700</small></div><p class="sample" style="font-family:var(--b-display);font-weight:600;font-size:22px">Nice catch! That's 4 jobs this week.</p></div>
+        <div class="spec"><span class="aa" style="font-weight:500">Aa</span><div><b>Figtree</b><small>Body and interface · 400 / 700</small></div><p class="sample">Clear and friendly at small sizes, so settings screens and emails stay easy to read.</p></div>
+      </section>
+      <section class="cell c-ui">
+        <p class="cell-label">Lead card</p>
+        <div class="lead">
+          <span class="lead-heat"><b>91</b> hot!</span>
+          <div class="lead-top"><span class="lead-src">r/chicago</span><span>14 min ago</span></div>
+          <p class="lead-quote">"Breaker keeps tripping in our 2-flat. Anyone know a licensed electrician in Logan Square who won't charge a fortune?"</p>
+          <div class="lead-tags"><span>Asking for help</span><span>Electrical</span><span>1.2 mi away</span></div>
+          <div class="lead-actions"><span class="la-primary">Write my reply</span><span class="la-secondary">See post</span></div>
+        </div>
+        <p class="cell-note">Sample content.</p>
+      </section>
+      <section class="cell c-voice">
+        <p class="cell-label">Voice · friendly, encouraging, celebratory</p>
+        <ul class="voice-tags"><li>Radar finds your people.</li><li>Customers, found.</li><li>Your new customer-finder.</li></ul>
+        <p class="alertcopy">Psst! 8 people near you need an electrician. Want me to draft replies?</p>
+        <div class="wordlists"><div><b>Say</b>your people, found, nice catch, psst</div><div><b>Avoid</b>jargon like "intent signals" or "ICP"</div></div>
+      </section>
+      <section class="cell c-comp">
+        <p class="cell-label">Companion idea</p>
+        <p style="font-family:var(--b-display);font-weight:600;font-size:20px;line-height:1.25">In this direction, the companion is the brand.</p>
+        <p>A round robot buddy with an antenna that pings when it finds someone. It appears in the logo, onboarding, empty states, alerts, emails and ads, and it can carry its own name (Blip, or anything you like).</p>
+      </section>
+    </div>
+    <footer class="board-foot">
+      <div><b>Best for</b>Non-technical owners and the widest audience. Great on social and in ads. The strongest fit for a Rive character.</div>
+      <div><b>Watch out</b>Can read as less serious to enterprise buyers, and the brand depends on the companion being genuinely great.</div>
+    </footer>
+  </article>
+
+  <!-- ================= D: COORDINATES ================= -->
+  <article class="board b-coord" id="dir-d" aria-labelledby="dir-d-name">
+    <header class="board-head">
+      <span class="board-letter">Direction D</span>
+      <h3 class="board-name" id="dir-d-name">Coordinates</h3>
+      <p class="board-pitch">Demand, mapped to the block. Cartographic, precise and grown-up, with geography as the hero.</p>
+      <ul class="board-tags"><li>Map-led</li><li>Utility</li><li>Editorial</li></ul>
+    </header>
+    <div class="board-hero">
+      <svg class="topo" id="topo" viewBox="0 0 800 520" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+      <div class="mock-nav">
+        <span class="lockup">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="19" fill="none" stroke="#151515" stroke-width="5"/><path d="M32 2v15M32 47v15M2 32h15M47 32h15" stroke="#151515" stroke-width="5"/><circle cx="40" cy="24" r="6.5" fill="#FF5A1F"/></svg>
+          <span class="coord-wm">RADAR</span>
+        </span>
+        <span class="mock-links" style="font-family:var(--b-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#3A3832"><span>Product</span><span>Coverage</span><span>Pricing</span></span>
+        <span class="coord-btn">Map my market</span>
+      </div>
+      <div class="hero-copy">
+        <p class="coord-kicker"><span><b>R-01</b> Demand survey</span><span>Chicago, IL</span><span>Sheet 3 of 12</span></p>
+        <p class="coord-h">Demand,<br><em>mapped.</em></p>
+        <p class="coord-sub">Radar shows where your next customers are, down to the block, and what they're asking for.</p>
+        <div class="ctas"><span class="btn-orange">Map my market</span><span class="btn-outline">See a sample survey</span></div>
+        <div class="strip num"><span>SIGNALS 14</span><span>RANGE 3.2 MI</span><span>UPDATED 09:41</span></div>
+      </div>
+      <div class="hero-vis">
+        <div class="reticle-wrap" aria-hidden="true">
+          <svg viewBox="0 0 300 300">
+            <circle cx="150" cy="150" r="96" fill="none" stroke="#151515" stroke-width="1.5"/>
+            <circle cx="150" cy="150" r="140" fill="none" stroke="#151515" stroke-width="1" stroke-dasharray="3 6"/>
+            <path d="M150 0v70M150 230v70M0 150h70M230 150h70" stroke="#151515" stroke-width="1.5"/>
+            <path d="M150 140v20M140 150h20" stroke="#151515" stroke-width="1.5"/>
+            <circle cx="196" cy="104" r="9" fill="#FF5A1F"/>
+            <circle cx="196" cy="104" r="18" fill="none" stroke="#FF5A1F" stroke-width="1.5"/>
+            <circle cx="98" cy="196" r="5" fill="#151515"/>
+            <circle cx="214" cy="190" r="5" fill="#151515"/>
+            <circle cx="112" cy="96" r="5" fill="#151515"/>
+            <text x="156" y="290" font-family="JetBrains Mono, monospace" font-size="10" fill="#6A665C">3.2 MI</text>
+          </svg>
+          <span class="ret-tag">41.9227° N · 87.7037° W<br><b>HEAT 91</b> · LOGAN SQUARE</span>
+        </div>
+      </div>
+    </div>
+    <div class="board-grid">
+      <section class="cell c-logo">
+        <p class="cell-label" data-n="01">Logo</p>
+        <div class="logo-stage">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="19" fill="none" stroke="#151515" stroke-width="4"/><path d="M32 2v15M32 47v15M2 32h15M47 32h15" stroke="#151515" stroke-width="4"/><circle cx="40" cy="24" r="6" fill="#FF5A1F"/></svg>
+          <span class="coord-big">RADAR</span>
+        </div>
+        <div class="logo-row">
+          <div class="appicon" style="background:#FF5A1F;border-radius:14px"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="18" fill="none" stroke="#151515" stroke-width="5"/><path d="M32 4v14M32 46v14M4 32h14M46 32h14" stroke="#151515" stroke-width="5"/><circle cx="40" cy="24" r="6" fill="#F4F2EC"/></svg></div>
+          <div class="appicon" style="background:#151515;border-radius:14px"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="18" fill="none" stroke="#E9E7DF" stroke-width="5"/><path d="M32 4v14M32 46v14M4 32h14M46 32h14" stroke="#E9E7DF" stroke-width="5"/><circle cx="40" cy="24" r="6" fill="#FF5A1F"/></svg></div>
+          <div class="logo-chip" style="background:#151515;color:#E9E7DF;border-radius:0"><span style="font:500 11px/1 var(--b-mono);letter-spacing:.08em">41.88°N</span><span style="font:900 14px/1 var(--b-display);font-stretch:125%;letter-spacing:.06em">RADAR</span></div>
+        </div>
+        <p class="cell-note">A survey reticle with the customer sitting just off center. Coordinates can sit beside the wordmark as a signature.</p>
+      </section>
+      <section class="cell c-pal">
+        <p class="cell-label" data-n="02">Palette</p>
+        <div class="sws">
+          <div class="sw" style="--c:#E9E7DF"><i></i><b>Survey Paper</b><code>#E9E7DF</code><span>Background</span></div>
+          <div class="sw" style="--c:#151515"><i></i><b>Carbon</b><code>#151515</code><span>Ink</span></div>
+          <div class="sw" style="--c:#FF5A1F"><i></i><b>Signal Orange</b><code>#FF5A1F</code><span>Primary, pins</span></div>
+          <div class="sw" style="--c:#7E8560"><i></i><b>Contour</b><code>#7E8560</code><span>Map lines</span></div>
+          <div class="sw" style="--c:#3C6E9F"><i></i><b>Water</b><code>#3C6E9F</code><span>Info, links</span></div>
+          <div class="sw" style="--c:#C7C2B4"><i></i><b>Grid</b><code>#C7C2B4</code><span>Rules</span></div>
+        </div>
+      </section>
+      <section class="cell c-type">
+        <p class="cell-label" data-n="03">Type</p>
+        <div class="spec"><span class="aa" style="font-weight:900;font-stretch:125%">Aa</span><div><b>Archivo Expanded</b><small>Display · 900 · all caps</small></div><p class="sample" style="font-weight:900;font-stretch:125%;text-transform:uppercase;font-size:19px">Every customer has coordinates.</p></div>
+        <div class="spec"><span class="aa" style="font-weight:400">Aa</span><div><b>Archivo</b><small>Body · 400 / 600</small></div><p class="sample">The same family in a normal width keeps long text calm and readable.</p></div>
+        <div class="spec"><span class="aa" style="font-family:var(--b-mono);font-size:40px">N°</span><div><b>JetBrains Mono</b><small>Coordinates, labels, data</small></div><p class="sample" style="font-family:var(--b-mono);color:var(--b-blue)">41.9227° N · 87.7037° W</p></div>
+      </section>
+      <section class="cell c-ui">
+        <p class="cell-label" data-n="04">Lead card</p>
+        <div class="lead">
+          <div class="lead-top"><span class="lead-src">r/chicago</span><span>14 min ago</span><span class="lead-heat"><b>91</b> heat</span></div>
+          <p class="lead-quote">"Breaker keeps tripping in our 2-flat. Anyone know a licensed electrician in Logan Square who won't charge a fortune?"</p>
+          <span class="lead-coords">41.9227° N · 87.7037° W · 1.2 MI FROM SHOP</span>
+          <div class="lead-tags"><span>DIRECT ASK</span><span>RESIDENTIAL ELECTRICAL</span></div>
+          <div class="lead-actions"><span class="la-primary">Draft reply</span><span class="la-secondary">Open thread</span></div>
+        </div>
+        <p class="cell-note">Sample content.</p>
+      </section>
+      <section class="cell c-voice">
+        <p class="cell-label" data-n="05">Voice · precise, calm, expert</p>
+        <ul class="voice-tags"><li>Demand, mapped.</li><li>Every customer has coordinates.</li><li>Know where your next customer is.</li></ul>
+        <p class="alertcopy">14 signals within 3.2 mi of your shop. Densest: Logan Square, 41.92° N 87.70° W.</p>
+        <div class="wordlists"><div><b>Say</b>map, range, territory, survey, coordinates</div><div><b>Avoid</b>hype words, exclamation marks</div></div>
+      </section>
+      <section class="cell c-comp">
+        <p class="cell-label" data-n="06">Companion idea</p>
+        <div class="comp-art">
+          <svg viewBox="0 0 160 140" aria-hidden="true"><path d="M96 34V14h14" stroke="#151515" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="114" cy="14" r="5" fill="#FF5A1F"/><rect x="40" y="34" width="84" height="56" rx="10" fill="#F4F2EC" stroke="#151515" stroke-width="3"/><rect x="52" y="46" width="60" height="22" rx="11" fill="#FF5A1F" stroke="#151515" stroke-width="3"/><circle cx="70" cy="57" r="4" fill="#151515"/><circle cx="94" cy="57" r="4" fill="#151515"/><path d="M48 90h68l8 18H40z" fill="#7E8560" stroke="#151515" stroke-width="3" stroke-linejoin="round"/><circle cx="56" cy="114" r="12" fill="#151515"/><circle cx="108" cy="114" r="12" fill="#151515"/><circle cx="56" cy="114" r="4" fill="#E9E7DF"/><circle cx="108" cy="114" r="4" fill="#E9E7DF"/></svg>
+        </div>
+        <p>A small field-scout rover with an orange visor and a periscope antenna. Practical and curious, like a Mars rover that works for you.</p>
+      </section>
+    </div>
+    <footer class="board-foot">
+      <div><b>Best for</b>Credibility with both local and B2B buyers. Makes geography the hero and should age well.</div>
+      <div><b>Watch out</b>Quieter and less playful. It needs a great live map and motion in the product to feel exciting.</div>
+    </footer>
+  </article>
+</section>
+
+<!-- COMPANION -->
+<section class="sec" id="companion" aria-labelledby="comp-h">
+  <div class="sec-head">
+    <p class="eyebrow">Companion brief</p>
+    <div>
+      <h2 id="comp-h">What the Rive companion needs to do</h2>
+      <p class="lede">You're designing the character with Astra and GPT Image 2.5. This is what the platform needs from it, so the art you generate can be rigged in Rive and wired to real product events.</p>
+    </div>
+  </div>
+  <div class="states">
+    <div class="state"><p class="k">wave</p><p class="when">First login, onboarding</p><p class="mo">Waves hello and points to the setup steps.</p></div>
+    <div class="state"><p class="k">idle</p><p class="when">Nothing new</p><p class="mo">Slow breathing, antenna sways, blinks.</p></div>
+    <div class="state"><p class="k">scanning</p><p class="when">A sweep is running</p><p class="mo">Antenna or eye rotates; eyes track left and right.</p></div>
+    <div class="state"><p class="k">found</p><p class="when">A new lead arrives</p><p class="mo">Perks up, a ping ring pulses from the antenna.</p></div>
+    <div class="state"><p class="k">hot</p><p class="when">Heat 85 or higher</p><p class="mo">Bigger reaction, glows, points at the lead.</p></div>
+    <div class="state"><p class="k">thinking</p><p class="when">Drafting a reply</p><p class="mo">Looks up, typing dots.</p></div>
+    <div class="state"><p class="k">celebrate</p><p class="when">Lead marked won</p><p class="mo">Jumps, confetti.</p></div>
+    <div class="state"><p class="k">sleeping</p><p class="when">Quiet hours</p><p class="mo">Eyes closed, dimmed, slow Z's.</p></div>
+    <div class="state"><p class="k">confused</p><p class="when">No results or an error</p><p class="mo">Head tilt, question mark.</p></div>
+  </div>
+
+  <div class="grid g2" style="margin-top:16px">
+    <article class="card">
+      <p class="label">Rive state machine inputs</p>
+      <div class="inputs" style="margin-top:12px">
+        <div><code>scanning</code><span class="t">Boolean</span><span>True while a sweep runs</span></div>
+        <div><code>leadCount</code><span class="t">Number</span><span>New leads since last visit, shown as a badge</span></div>
+        <div><code>heat</code><span class="t">Number</span><span>0 to 100, drives glow and excitement</span></div>
+        <div><code>ping</code><span class="t">Trigger</span><span>Fires on every new lead</span></div>
+        <div><code>celebrate</code><span class="t">Trigger</span><span>Fires when a lead is marked won</span></div>
+        <div><code>sleep</code><span class="t">Boolean</span><span>Quiet hours</span></div>
+        <div><code>mood</code><span class="t">Number</span><span>0 neutral, 1 happy, 2 confused</span></div>
+      </div>
+    </article>
+    <article class="card">
+      <p class="label">Art checklist so it rigs cleanly in Rive</p>
+      <ul class="check" style="margin-top:12px">
+        <li>Flat vector style: solid fills, clean edges, no painterly texture</li>
+        <li>Generate a front view, a three-quarter view, and an expression sheet of the states above, all in one consistent style</li>
+        <li>Keep parts separable: body, face, eyes, eyelids, mouth, antenna, arms, accessories</li>
+        <li>Three or four colors from the chosen palette, plus one highlight</li>
+        <li>Must read clearly at 32px (avatar) and at 240px (onboarding)</li>
+        <li>Rebuild the final art as vector shapes in Rive and rig with bones. Imported raster images work, but don't scale or recolor as well</li>
+      </ul>
+    </article>
+  </div>
+
+  <p class="label" style="margin:32px 0 12px">Prompt starters, one per direction</p>
+  <div class="grid g2">
+    <article class="card prompt">
+      <div class="ph"><b>A · Phosphor</b><button class="copy" type="button" id="copy-a" data-target="pr-a">Copy</button></div>
+      <pre id="pr-a">Mascot character for a tech app called Radar: a small friendly scout drone, round matte charcoal body, one large circular eye that looks like a glowing lime-green radar screen with a sweep line, tiny antenna on top, two little side thrusters. Flat vector style, solid colors, clean shapes, no texture. Front view, centered, plain dark background. Expression sheet: idle, scanning, excited, thinking, celebrating, sleeping, confused.</pre>
+    </article>
+    <article class="card prompt">
+      <div class="ph"><b>B · Thermal</b><button class="copy" type="button" id="copy-b" data-target="pr-b">Copy</button></div>
+      <pre id="pr-b">Mascot character for a business app called Radar: a soft, round ember creature shaped like a friendly flame, body glowing with a heat gradient from violet at the edges to magenta, orange and yellow at the core, simple dark oval eyes and a small smile. Flat vector style, solid color bands, clean shapes, no texture. Front view, centered, plain warm off-white background. Expression sheet: idle, scanning, excited, thinking, celebrating, sleeping, confused.</pre>
+    </article>
+    <article class="card prompt">
+      <div class="ph"><b>C · Blip</b><button class="copy" type="button" id="copy-c" data-target="pr-c">Copy</button></div>
+      <pre id="pr-c">Mascot character for an app called Radar: a round, chubby robot buddy in bright cobalt blue with a thick dark navy outline, a white rounded face screen with two big oval eyes and pink cheeks, a short antenna topped with a yellow ball that sends out ping waves, small stubby arms and feet. Flat vector style, bold outlines, solid colors, no texture. Front view, centered, plain light blue background. Expression sheet: waving, idle, scanning, excited, thinking, celebrating, sleeping, confused.</pre>
+    </article>
+    <article class="card prompt">
+      <div class="ph"><b>D · Coordinates</b><button class="copy" type="button" id="copy-d" data-target="pr-d">Copy</button></div>
+      <pre id="pr-d">Mascot character for a mapping app called Radar: a small field-scout rover robot with a boxy off-white body, a rounded orange visor with two dot eyes, a periscope-style antenna with an orange tip, olive-green chassis and two black wheels. Practical and curious personality. Flat vector style, solid colors, clean shapes, no texture. Front view, centered, plain stone-grey background. Expression sheet: idle, scanning, excited, thinking, celebrating, sleeping, confused.</pre>
+    </article>
+  </div>
+</section>
+
+<!-- DECISIONS -->
+<section class="sec" id="decide" aria-labelledby="dec-h">
+  <div class="sec-head">
+    <p class="eyebrow">Your decisions</p>
+    <div>
+      <h2 id="dec-h">What I need from you</h2>
+      <p class="lede">Answer these and I'll build the brandkit.</p>
+    </div>
+  </div>
+  <div class="decide">
+    <article class="card"><p class="label">Decision</p><h3>Brand direction</h3><p>Pick one, or a mix. For example, D's product UI with C's companion.</p><div class="opts"><span class="chip">A · Phosphor</span><span class="chip">B · Thermal</span><span class="chip">C · Blip</span><span class="chip">D · Coordinates</span><span class="chip">Mix</span></div></article>
+    <article class="card"><p class="label">Decision</p><h3>Tagline</h3><p>Pick one from the boards, or ask me for more in the direction you choose.</p><div class="opts"><span class="chip">Lock on to demand.</span><span class="chip">Find the heat.</span><span class="chip">Customers, found.</span><span class="chip">Demand, mapped.</span></div></article>
+    <article class="card"><p class="label">Decision</p><h3>Launch industries</h3><p>My recommendation is home services plus B2B services. Tell me if you have a different first market in mind.</p><div class="opts"><span class="chip">Home services</span><span class="chip">B2B services</span><span class="chip">Something else</span></div></article>
+    <article class="card"><p class="label">Decision</p><h3>Name and domain</h3><p>Keep "Radar" on its own, or pair it with a modifier for the domain and trademark. I haven't checked availability for any of these.</p><div class="opts"><span class="chip">Radar</span><span class="chip">Radar HQ</span><span class="chip">Get Radar</span><span class="chip">Radar AI</span></div></article>
+  </div>
+  <div class="next">
+    <div><span class="n">01 · after approval</span><b>Brandkit</b><p>Logo files, color system, type scale, UI components, motion rules, companion style guide.</p></div>
+    <div><span class="n">02</span><b>Features</b><p>MVP versus later, using the product surfaces above as the starting list.</p></div>
+    <div><span class="n">03</span><b>Website</b><p>Marketing site in the approved brand.</p></div>
+    <div><span class="n">04</span><b>Prototype</b><p>Clickable app: onboarding, Radar screen, lead card, alerts.</p></div>
+  </div>
+  <p class="reply">A reply as short as <q>Go with C, tagline "Customers, found.", launch with home services</q> is enough to start the brandkit.</p>
+</section>
+
+<footer class="end"><span>Radar · Kickoff book v0.1 · October 2026</span><span>Businesses, examples and numbers marked "sample" are illustrations.</span></footer>
+</main>
+
+<script>
+(function(){
+  /* H3-style hexagon demand map */
+  var svg=document.getElementById('hexsvg');
+  if(svg){
+    var NS='http://www.w3.org/2000/svg', s=13, w=Math.sqrt(3)*s, h=1.5*s, cx=280, cy=176, R=128;
+    var hot=[[230,130,1],[330,210,.8],[300,110,.55],[200,230,.6],[360,140,.4]];
+    var frag=document.createDocumentFragment();
+    for(var r=-1;r<19;r++){
+      for(var c=-1;c<25;c++){
+        var x=c*w+(r%2?w/2:0), y=r*h;
+        var d=Math.hypot(x-cx,y-cy);
+        var pts=[];
+        for(var i=0;i<6;i++){var a=Math.PI/180*(60*i-30);pts.push((x+s*Math.cos(a)).toFixed(1)+','+(y+s*Math.sin(a)).toFixed(1));}
+        var p=document.createElementNS(NS,'polygon');
+        p.setAttribute('points',pts.join(' '));
+        if(d<=R){
+          var v=.06;
+          hot.forEach(function(k){var dd=Math.hypot(x-k[0],y-k[1]);v+=k[2]*Math.exp(-(dd*dd)/(2*38*38));});
+          v=Math.min(v,1);
+          p.setAttribute('class','hx');
+          p.setAttribute('fill-opacity',(0.08+v*0.85).toFixed(2));
+        }else{
+          p.setAttribute('class','hx-out');
+        }
+        frag.appendChild(p);
+      }
+    }
+    svg.appendChild(frag);
+    var ring=document.createElementNS(NS,'circle');
+    ring.setAttribute('cx',cx);ring.setAttribute('cy',cy);ring.setAttribute('r',R+6);ring.setAttribute('class','ring');
+    svg.appendChild(ring);
+    var pr=document.createElementNS(NS,'circle');pr.setAttribute('cx',cx);pr.setAttribute('cy',cy);pr.setAttribute('r',9);pr.setAttribute('class','pin-ring');svg.appendChild(pr);
+    var pn=document.createElementNS(NS,'circle');pn.setAttribute('cx',cx);pn.setAttribute('cy',cy);pn.setAttribute('r',4);pn.setAttribute('class','pin');svg.appendChild(pn);
+    function label(x,y,t,cls){var e=document.createElementNS(NS,'text');e.setAttribute('x',x);e.setAttribute('y',y);e.setAttribute('class',cls);e.textContent=t;svg.appendChild(e);}
+    label(cx+14,cy+4,'Your shop','svgtext');
+    label(cx+R-30,cy-R+18,'10 mi','svgtext-muted');
+  }
+
+  /* Contour lines for Direction D (index contour every 5th line, like a real topo map) */
+  var topo=document.getElementById('topo');
+  if(topo){
+    var NS2='http://www.w3.org/2000/svg';
+    function ring(cx,cy,r,k,seed){
+      var pts=[],n=56;
+      for(var i=0;i<n;i++){
+        var t=i/n*Math.PI*2;
+        var rr=r*(1+0.16*Math.sin(2*t+seed)+0.09*Math.sin(3*t+seed*1.7+k*0.12)+0.05*Math.sin(5*t+seed*2.3-k*0.2));
+        pts.push([cx+rr*Math.cos(t)*1.25,cy+rr*Math.sin(t)]);
+      }
+      return pts;
+    }
+    function smooth(pts){
+      var n=pts.length,d='M'+pts[0][0].toFixed(1)+','+pts[0][1].toFixed(1);
+      for(var i=0;i<n;i++){
+        var p0=pts[(i-1+n)%n],p1=pts[i],p2=pts[(i+1)%n],p3=pts[(i+2)%n];
+        d+='C'+(p1[0]+(p2[0]-p0[0])/6).toFixed(1)+','+(p1[1]+(p2[1]-p0[1])/6).toFixed(1)+' '+(p2[0]-(p3[0]-p1[0])/6).toFixed(1)+','+(p2[1]-(p3[1]-p1[1])/6).toFixed(1)+' '+p2[0].toFixed(1)+','+p2[1].toFixed(1);
+      }
+      return d+'Z';
+    }
+    var hills=[[600,200,16,1.3],[720,450,9,4.1],[420,520,7,2.2]];
+    hills.forEach(function(hl){
+      for(var k=0;k<hl[2];k++){
+        var path=document.createElementNS(NS2,'path');
+        path.setAttribute('d',smooth(ring(hl[0],hl[1],14+k*17,k,hl[3])));
+        if(k%5===4)path.setAttribute('class','idx');
+        topo.appendChild(path);
+      }
+    });
+    var t=document.createElementNS(NS2,'text');t.setAttribute('x','668');t.setAttribute('y','74');t.textContent='620 FT';topo.appendChild(t);
+  }
+
+  /* Copy buttons */
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var el=document.getElementById(btn.getAttribute('data-target'));
+      var text=el.textContent;
+      function selectIt(){var range=document.createRange();range.selectNodeContents(el);var sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);btn.textContent='Selected, press Ctrl+C';}
+      try{
+        navigator.clipboard.writeText(text).then(function(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy';},1600);},selectIt);
+      }catch(e){selectIt();}
+    });
+  });
+})();
+</script>
